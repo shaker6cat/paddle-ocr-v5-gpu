@@ -1,0 +1,94 @@
+# 忽略模型权重（运行时挂载）
+weights/
+
+# 忽略git相关文件
+.git
+.gitattributes
+.gitignore
+
+# 忽略Python缓存文件
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 忽略测试和缓存目录
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+*.cover
+.hypothesis/
+
+# 忽略IDE和编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 忽略大文件
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+
+# 忽略日志和临时文件
+*.log
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# 忽略Docker相关文件
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# 忽略本地环境变量
+.env
+.env.*
+
+# 忽略压缩包
+*.tar.gz
+*.zip
+*.7z
+
+# 忽略测试和文档
+tests/
+test/
+docs/
+documentation/
+
+# 忽略Node.js相关
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 忽略其他临时文件
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+.DS_Store
+Thumbs.db
