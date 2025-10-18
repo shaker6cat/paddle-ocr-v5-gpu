@@ -49,5 +49,10 @@ Thumbs.db
 .ipynb_checkpoints/
 换源+mcp安装文件/
 
-# Log files
+# Log files (except for specific ones we want to keep)
 ocr_execution_*.log
+
+# Exclude image directory from ignore
+!images/
+!images/*.png
+!images/.gitkeep
