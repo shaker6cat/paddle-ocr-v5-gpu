@@ -1,0 +1,1594 @@
+Script started on 2025-10-18 23:30:25+00:00 [TERM="xterm-256color" TTY="/dev/pts/9" COLUMNS="120" LINES="39"]
+[1;35m    ______              __                _
+   / ____/___   ____ _ / /_ __  __ _____ (_)____  ___
+  / /_   / _ \ / __ `// __// / / // ___// //_  / / _ \
+ / __/  /  __// /_/ // /_ / /_/ // /   / /  / /_/  __/
+/_/     \___/ \__,_/ \__/ \__,_//_/   /_/  /___/\___/
+======================================================[0m
+
+【目录及作用】
+
++------------------+---------------------------------+---------+---------------------------------------------------------+
+|  目录名称        | 路径                            | IO 性能 |  说明                                                   |
++------------------+---------------------------------+---------+---------------------------------------------------------+
+|  云端同步目录    |  /home/featurize/work           | 慢      |  云同步盘中的数据会一直跟随用户，不会随实例退还被销毁， |
+|                  |                                 |         |  但其读取/写入性能非常差。                              |
+|                  |                                 |         |  所以一定不要在这里保存数据集，否则会严重影响训练性能   |
++------------------+---------------------------------+---------+---------------------------------------------------------+
+|  数据集下载目录  |  /home/featurize/data           | 快      |  添加数据集会下载并解压至此目录，该目录磁盘为本地高速   |
+|                  |                                 |         |  磁盘，因此读写很快。实例销毁后自动删除                 | 
++------------------+---------------------------------+---------+---------------------------------------------------------+
+|  其他目录        |  N / A                          | 快      |  其他目录均为本地高速磁盘，实例销毁后自动删除           |
++------------------+---------------------------------+---------+---------------------------------------------------------+
+
+【最佳实践】
+
+[0;32m ✅  始终使用数据集功能来添加数据，添加完成后直接使用，不要再移动数据的位置。
+[0;32m ✅  始终将代码保存至「云端同步目录」中。
+[0;32m ✅  重要的模型文件保存在「云端同步目录」，不重要的模型文件保存在其他位置。
+[0;32m ✅  始终使用 pip 安装依赖，而不是用 conda，如无必要，不要创建虚拟环境，除非你知道自己在做什么。
+[0;32m ✅  常用的包可使用 pip install --user xxx 安装，这样下次使用无需重复安装。 [0m
+
+【注意事项】
+
+[0;31m ⛔️  云端同步目录（work目录）有配额限制，超过配额将产生费用。具体的额度可点击右上角的头像确认，用量请使用 `du -sh ~/work/` 查看。
+[0;31m ⛔️  请不要删除 conda 的 base 环境，这会导致无法访问工作区。
+[0;31m ⛔️  Featurize 禁止挖矿，请不要使用 featurize 的实例挖矿，一经发现直接封号恕不退款。
+
+
+
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h[7mscript ~/work/ocr_images_session_$(date +%Y%m%d_%H%M%S).log python ocr_cli.py[27m[77D[27ms[27mc[27mr[27mi[27mp[27mt[27m [27m~[27m/[27mw[27mo[27mr[27mk[27m/[27mo[27mc[27mr[27m_[27mi[27mm[27ma[27mg[27me[27ms[27m_[27ms[27me[27ms[27ms[27mi[27mo[27mn[27m_[27m$[27m([27md[27ma[27mt[27me[27m [27m+[27m%[27mY[27m%[27mm[27m%[27md[27m_[27m%[27mH[27m%[27mM[27m%[27mS[27m)[27m.[27ml[27mo[27mg[27m [27mp[27my[27mt[27mh[27mo[27mn[27m [27mo[27mc[27mr[27m_[27mc[27ml[27mi[27m.[27mp[27my[?1l>[?2004l
+]2;script ~/work/ocr_images_session_$(date +%Y%m%d_%H%M%S).log python ocr_cli.py]1;scriptScript started, output log file is '/home/featurize/work/ocr_images_session_20251018_233107.log'.
+[1;35m    ______              __                _
+   / ____/___   ____ _ / /_ __  __ _____ (_)____  ___
+  / /_   / _ \ / __ `// __// / / // ___// //_  / / _ \
+ / __/  /  __// /_/ // /_ / /_/ // /   / /  / /_/  __/
+/_/     \___/ \__,_/ \__/ \__,_//_/   /_/  /___/\___/
+======================================================[0m
+
+【目录及作用】
+
++------------------+---------------------------------+---------+---------------------------------------------------------+
+|  目录名称        | 路径                            | IO 性能 |  说明                                                   |
++------------------+---------------------------------+---------+---------------------------------------------------------+
+|  云端同步目录    |  /home/featurize/work           | 慢      |  云同步盘中的数据会一直跟随用户，不会随实例退还被销毁， |
+|                  |                                 |         |  但其读取/写入性能非常差。                              |
+|                  |                                 |         |  所以一定不要在这里保存数据集，否则会严重影响训练性能   |
++------------------+---------------------------------+---------+---------------------------------------------------------+
+|  数据集下载目录  |  /home/featurize/data           | 快      |  添加数据集会下载并解压至此目录，该目录磁盘为本地高速   |
+|                  |                                 |         |  磁盘，因此读写很快。实例销毁后自动删除                 | 
++------------------+---------------------------------+---------+---------------------------------------------------------+
+|  其他目录        |  N / A                          | 快      |  其他目录均为本地高速磁盘，实例销毁后自动删除           |
++------------------+---------------------------------+---------+---------------------------------------------------------+
+
+【最佳实践】
+
+[0;32m ✅  始终使用数据集功能来添加数据，添加完成后直接使用，不要再移动数据的位置。
+[0;32m ✅  始终将代码保存至「云端同步目录」中。
+[0;32m ✅  重要的模型文件保存在「云端同步目录」，不重要的模型文件保存在其他位置。
+[0;32m ✅  始终使用 pip 安装依赖，而不是用 conda，如无必要，不要创建虚拟环境，除非你知道自己在做什么。
+[0;32m ✅  常用的包可使用 pip install --user xxx 安装，这样下次使用无需重复安装。 [0m
+
+【注意事项】
+
+[0;31m ⛔️  云端同步目录（work目录）有配额限制，超过配额将产生费用。具体的额度可点击右上角的头像确认，用量请使用 `du -sh ~/work/` 查看。
+[0;31m ⛔️  请不要删除 conda 的 base 环境，这会导致无法访问工作区。
+[0;31m ⛔️  Featurize 禁止挖矿，请不要使用 featurize 的实例挖矿，一经发现直接封号恕不退款。
+
+
+
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h[7mpython ocr_cli.py | tee -a ocr_log_$(date +%Y%m%d).log[27m[54D[27mp[27my[27mt[27mh[27mo[27mn[27m [27mo[27mc[27mr[27m_[27mc[27ml[27mi[27m.[27mp[27my[27m [27m|[27m [27mt[27me[27me[27m [27m-[27ma[27m [27mo[27mc[27mr[27m_[27ml[27mo[27mg[27m_[27m$[27m([27md[27ma[27mt[27me[27m [27m+[27m%[27mY[27m%[27mm[27m%[27md[27m)[27m.[27ml[27mo[27mg[?1l>[?2004l
+]2;python ocr_cli.py | tee -a ocr_log_$(date +%Y%m%d).log]1;python[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+正在初始化PaddleOCR...
+[2025-10-18 23:32:05] 开始初始化PaddleOCR
+[2025-10-18 23:32:11] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-18 23:32:11] 找到 361 张PNG图片
+[2025-10-18 23:32:11] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251018_233205.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+[2025-10-18 23:32:11] 开始使用多线程处理图片，最大并发线程数: 4
+🔄 开始使用多线程处理图片，最大并发线程数: 4
+[2025-10-18 23:32:11] 开始处理图片: 0032.png
+[2025-10-18 23:32:11] 开始处理图片: 0033.png
+[2025-10-18 23:32:11] 开始处理图片: 0034.png
+[2025-10-18 23:32:11] 开始处理图片: 0035.png
+[2025-10-18 23:32:28] ✅ 图片 0032.png 处理完成，耗时 16.47 秒
+[2025-10-18 23:32:28] 识别内容: F
+1
+口
+□
+F
+文学运动
+*
+:
+二
+古文运动
+唐代中期韩愈、柳宗元提倡的一种文体和文学语言的革...
+[2025-10-18 23:32:28] ✅ 图片 0035.png 处理完成，耗时 16.61 秒
+[2025-10-18 23:32:28] 识别内容: 不同程度上反映了社会的本质。
+新乐府运动作为文学史上的一种文学思潮，对后世文学
+产生了广泛的影响，在...
+[2025-10-18 23:32:29] ✅ 图片 0034.png 处理完成，耗时 17.50 秒
+[2025-10-18 23:32:29] 识别内容: 这些征集的民歌也称作
+乐府”
+4
+新乐府是用新题材创作的
+0
+乐曲和诗，和乐府古题相对而称。
+'
+唐...
+[2025-10-18 23:32:30] ✅ 图片 0033.png 处理完成，耗时 19.15 秒
+[2025-10-18 23:32:30] 识别内容: *
+张文章应是作者真实情感的流露，
+反对无病呻吟，
+矫揉造
+作的不良文风，
+指出：
+大凡物不得其平则...
+
+❌ 程序执行出错: '0032.png'
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h[?1l>[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython ocr_cli.py | tee -a ocr_log_$(date +%Y%m%d).log[?1l>[?2004l
+]2;python ocr_cli.py | tee -a ocr_log_$(date +%Y%m%d).log]1;python[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+正在初始化PaddleOCR...
+[2025-10-18 23:36:35] 开始初始化PaddleOCR
+[2025-10-18 23:36:42] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-18 23:36:42] 找到 361 张PNG图片
+[2025-10-18 23:36:42] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251018_233635.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+[2025-10-18 23:36:42] 开始使用多线程处理图片，最大并发线程数: 4
+🔄 开始使用多线程处理图片，最大并发线程数: 4
+[2025-10-18 23:36:42] 开始处理图片: 0032.png
+[2025-10-18 23:36:42] 开始处理图片: 0033.png
+[2025-10-18 23:36:42] 开始处理图片: 0034.png
+[2025-10-18 23:36:42] 开始处理图片: 0035.png
+[2025-10-18 23:36:59] ✅ 图片 0034.png 处理完成，耗时 16.66 秒
+[2025-10-18 23:36:59] ✅ 图片 0035.png 处理完成，耗时 16.67 秒
+[2025-10-18 23:36:59] 识别内容: 
+[2025-10-18 23:36:59] 识别内容: 
+[2025-10-18 23:36:59] ✅ 图片 0033.png 处理完成，耗时 16.85 秒
+[2025-10-18 23:36:59] 识别内容: 
+[2025-10-18 23:36:59] ✅ 图片 0032.png 处理完成，耗时 17.22 秒
+[2025-10-18 23:36:59] 识别内容: 
+[2025-10-18 23:36:59] 开始保存识别结果到Markdown文件
+[2025-10-18 23:36:59] ✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+📊 处理统计: 4 张图片
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+📝 日志文件: /home/featurize/work/ocr_execution_20251018_233635.log
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython ocr_cli.py | tee -a ocr_log_$(date +%Y%m%d).log[?1l>[?2004l
+]2;python ocr_cli.py | tee -a ocr_log_$(date +%Y%m%d).log]1;python[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+正在初始化PaddleOCR...
+[2025-10-18 23:42:40] 开始初始化PaddleOCR
+[2025-10-18 23:42:46] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-18 23:42:46] 找到 361 张PNG图片
+[2025-10-18 23:42:46] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251018_234240.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+[2025-10-18 23:42:46] 开始使用多线程处理图片，最大并发线程数: 4
+🔄 开始使用多线程处理图片，最大并发线程数: 4
+[2025-10-18 23:42:46] 开始处理图片: 0032.png
+[2025-10-18 23:42:46] 开始处理图片: 0033.png
+[2025-10-18 23:42:46] 开始处理图片: 0034.png
+[2025-10-18 23:42:46] 开始处理图片: 0035.png
+[2025-10-18 23:43:01] ✅ 图片 0032.png 处理完成，耗时 15.41 秒
+[2025-10-18 23:43:01] 识别内容: 
+[2025-10-18 23:43:03] ✅ 图片 0033.png 处理完成，耗时 17.36 秒
+[2025-10-18 23:43:03] 识别内容: 
+[2025-10-18 23:43:04] ✅ 图片 0035.png 处理完成，耗时 18.01 秒
+[2025-10-18 23:43:04] 识别内容: 
+[2025-10-18 23:43:04] ✅ 图片 0034.png 处理完成，耗时 18.42 秒
+[2025-10-18 23:43:04] 识别内容: 
+[2025-10-18 23:43:04] 开始保存识别结果到Markdown文件
+[2025-10-18 23:43:04] ✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+📊 处理统计: 4 张图片
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+📝 日志文件: /home/featurize/work/ocr_execution_20251018_234240.log
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h[7m{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_r[7me[7mview.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> o[7mc[7mr_review.log 2>&1[27m[K
+[K[3A[14C[27m{[27m [27me[27mc[27mh[27mo[27m [27m"[27m=[27m=[27m=[27m [27m复[27m[27m盘[27m[27m记[27m[27m录[27m[27m:[27m [27m$[27m([27md[27ma[27mt[27me[27m [27m'[27m+[27m%[27mY[27m-[27m%[27mm[27m-[27m%[27md[27m [27m%[27mH[27m:[27m%[27mM[27m:[27m%[27mS[27m'[27m)[27m [27m=[27m=[27m=[27m"[27m;[27m [27me[27mc[27mh[27mo[27m [27m"[27m执[27m[27m行[27m[27m命[27m[27m令[27m[27m:[27m [27mp[27my[27mt[27mh[27mo[27mn[27m [27mo[27mc[27mr[27m_[27mc[27ml[27mi[27m.[27mp[27my[27m [27m$[27m@[27m"[27m;[27m [27m}[27m [27m>[27m>[27m [27mo[27mc[27mr[27m_[27mre[27mv[27mi[27me[27mw[27m.[27ml[27mo[27mg[27m [27m2[27m>[27m&[27m1[27m [27m&[27m&[27m [27mp[27my[27mt[27mh[27mo[27mn[27m [27mo[27mc[27mr[27m_[27mc[27ml[27mi[27m.[27mp[27my[27m [27m"[27m$[27m@[27m"[27m [27m|[27m [27mt[27me[27me[27m [27m-[27ma[27m [27mo[27mc[27mr[27m_[27mr[27me[27mv[27mi[27me[27mw[27m.[27ml[27mo[27mg[27m [27m&[27m&[27m [27me[27mc[27mh[27mo[27m [27m"[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m-[27m"[27m [27m>[27m>[27m [27moc[27mr[27m_[27mr[27me[27mv[27mi[27me[27mw[27m.[27ml[27mo[27mg[27m [27m2[27m>[27m&[27m1[1B[K[?1l>[?2004l
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+正在初始化PaddleOCR...
+[2025-10-18 23:46:37] 开始初始化PaddleOCR
+[2025-10-18 23:46:44] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-18 23:46:44] 找到 361 张PNG图片
+[2025-10-18 23:46:44] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251018_234637.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+[2025-10-18 23:46:44] 开始使用多线程处理图片，最大并发线程数: 4
+🔄 开始使用多线程处理图片，最大并发线程数: 4
+[2025-10-18 23:46:44] 开始处理图片: 0032.png
+[2025-10-18 23:46:44] 开始处理图片: 0033.png
+[2025-10-18 23:46:44] 开始处理图片: 0034.png
+[2025-10-18 23:46:44] 开始处理图片: 0035.png
+[2025-10-18 23:47:03] ✅ 图片 0032.png 处理完成，耗时 19.38 秒
+[2025-10-18 23:47:03] 识别内容: 
+[2025-10-18 23:47:04] ✅ 图片 0034.png 处理完成，耗时 19.72 秒
+[2025-10-18 23:47:04] 识别内容: 
+[2025-10-18 23:47:04] ✅ 图片 0033.png 处理完成，耗时 20.26 秒
+[2025-10-18 23:47:04] 识别内容: 
+[2025-10-18 23:47:04] ✅ 图片 0035.png 处理完成，耗时 20.54 秒
+[2025-10-18 23:47:04] 识别内容: 
+[2025-10-18 23:47:04] 开始保存识别结果到Markdown文件
+[2025-10-18 23:47:04] ✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+📊 处理统计: 4 张图片
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+📝 日志文件: /home/featurize/work/ocr_execution_20251018_234637.log
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+正在初始化PaddleOCR...
+[2025-10-18 23:49:51] 开始初始化PaddleOCR
+[2025-10-18 23:49:57] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-18 23:49:57] 找到 361 张PNG图片
+[2025-10-18 23:49:57] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251018_234951.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+[2025-10-18 23:49:57] 开始使用多线程处理图片，最大并发线程数: 4
+🔄 开始使用多线程处理图片，最大并发线程数: 4
+[2025-10-18 23:49:57] 开始处理图片: 0032.png
+[2025-10-18 23:49:57] 开始处理图片: 0033.png
+[2025-10-18 23:49:57] 开始处理图片: 0034.png
+[2025-10-18 23:49:57] 开始处理图片: 0035.png
+[2025-10-18 23:50:13] ✅ 图片 0035.png 处理完成，耗时 15.54 秒
+[2025-10-18 23:50:13] 识别内容: 
+[2025-10-18 23:50:15] ✅ 图片 0034.png 处理完成，耗时 17.34 秒
+[2025-10-18 23:50:15] 识别内容: 
+[2025-10-18 23:50:15] ✅ 图片 0033.png 处理完成，耗时 17.75 秒
+[2025-10-18 23:50:15] 识别内容: 
+[2025-10-18 23:50:15] ✅ 图片 0032.png 处理完成，耗时 18.23 秒
+[2025-10-18 23:50:15] 识别内容: 
+[2025-10-18 23:50:15] 开始保存识别结果到Markdown文件
+[2025-10-18 23:50:15] ✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+📊 处理统计: 4 张图片
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+📝 日志文件: /home/featurize/work/ocr_execution_20251018_234951.log
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{  File "/home/featurize/work/ocr_cli.py", line 74
+    """处理单张图片 - 修复版"""
+    ^
+IndentationError: expected an indented block after function definition on line 73
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{  File "/home/featurize/work/ocr_cli.py", line 74
+    """处理单张图片 - 修复版"""
+    ^
+IndentationError: expected an indented block after function definition on line 73
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{  File "/home/featurize/work/ocr_cli.py", line 74
+    """处理单张图片 - 修复版"""
+    ^
+IndentationError: expected an indented block after function definition on line 73
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{/home/featurize/work/ocr_cli.py:30: DeprecationWarning: The parameter `use_angle_cls` has been deprecated and will be removed in the future. Please use `use_textline_orientation` instead.
+  self.ocr = PaddleOCR(
+正在初始化PaddleOCR...
+[2025-10-19 00:02:02] 开始初始化PaddleOCR
+❌ PaddleOCR初始化失败: Unknown argument: show_log
+[2025-10-19 00:02:02] ❌ PaddleOCR初始化失败: Unknown argument: show_log
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+正在初始化PaddleOCR...
+[2025-10-19 00:03:15] 开始初始化PaddleOCR
+[2025-10-19 00:03:22] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-19 00:03:22] 找到 361 张PNG图片
+[2025-10-19 00:03:22] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_000315.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🔄 开始使用单线程处理图片（调试模式）
+[2025-10-19 00:03:22] 开始使用单线程处理图片（调试模式）
+[2025-10-19 00:03:22] 开始处理图片: 0032.png
+[2025-10-19 00:03:31] ❌ 处理图片 0032.png 失败: 'OCRResult' object has no attribute 'data'
+
+❌ 处理图片 0032.png 失败: 'OCRResult' object has no attribute 'data'
+[2025-10-19 00:03:31] 开始处理图片: 0033.png
+[2025-10-19 00:03:43] ❌ 处理图片 0033.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >), &(void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >, phi::TypeTag<int> >::Compute<1, 3, 0, 0, phi::GPUContext const, phi::DenseTensor const, phi::DenseTensor const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&)
+9   void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >)
+10  phi::DnnWorkspaceHandle::ReallocWorkspace(unsigned long)
+11  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+14  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+15  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.216699GB memory on GPU 0, 10.225708GB memory has been allocated and available memory is only 1.434448GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+
+❌ 处理图片 0033.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >), &(void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >, phi::TypeTag<int> >::Compute<1, 3, 0, 0, phi::GPUContext const, phi::DenseTensor const, phi::DenseTensor const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&)
+9   void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >)
+10  phi::DnnWorkspaceHandle::ReallocWorkspace(unsigned long)
+11  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+14  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+15  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.216699GB memory on GPU 0, 10.225708GB memory has been allocated and available memory is only 1.434448GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+[2025-10-19 00:03:43] 开始处理图片: 0034.png
+[2025-10-19 00:03:56] ❌ 处理图片 0034.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.225708GB memory has been allocated and available memory is only 1.434448GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+
+❌ 处理图片 0034.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.225708GB memory has been allocated and available memory is only 1.434448GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+[2025-10-19 00:03:56] 开始处理图片: 0035.png
+[2025-10-19 00:04:09] ❌ 处理图片 0035.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.225708GB memory has been allocated and available memory is only 1.434448GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+
+❌ 处理图片 0035.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.225708GB memory has been allocated and available memory is only 1.434448GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+[2025-10-19 00:04:09] 开始保存识别结果到Markdown文件
+[2025-10-19 00:04:09] ✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+📊 处理统计: 4 张图片
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_000315.log
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{  File "/home/featurize/work/ocr_cli.py", line 103
+    self._log_message(f"识别内容: {recognized_text[:50].replace('\n', ' ')}..." if len(recognized_text) > 50 else f"识别内容: {recognized_text.replace('\n', ' ')}")
+                                                                            ^^
+SyntaxError: f-string expression part cannot include a backslash
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{  File "/home/featurize/work/ocr_cli.py", line 203
+    print(
+         ^
+SyntaxError: '(' was never closed
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{  File "/home/featurize/work/ocr_cli.py", line 203
+    print(
+         ^
+SyntaxError: '(' was never closed
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{/home/featurize/work/ocr_cli.py:32: DeprecationWarning: The parameter `use_angle_cls` has been deprecated and will be removed in the future. Please use `use_textline_orientation` instead.
+  self.ocr = PaddleOCR(
+正在初始化PaddleOCR...
+[2025-10-19 00:10:24] 开始初始化PaddleOCR
+❌ PaddleOCR初始化失败: Unknown argument: use_gpu
+[2025-10-19 00:10:24] ❌ PaddleOCR初始化失败: Unknown argument: use_gpu
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[A[A[K[1B[K[1B[K[1B[K[3A[14C[?1l>[?2004l[1B[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hppython    p  iflow     iflowls   iflow     iflow     iflowls   cd ..{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{/home/featurize/work/ocr_cli.py:32: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+/home/featurize/work/ocr_cli.py:32: DeprecationWarning: The parameter `rec_batch_num` has been deprecated and will be removed in the future. Please use `text_recognition_batch_size` instead.
+  self.ocr = PaddleOCR(
+正在初始化PaddleOCR...
+[2025-10-19 00:51:17] 开始初始化PaddleOCR
+❌ PaddleOCR初始化失败: Unknown argument: det_batch_num
+[2025-10-19 00:51:17] ❌ PaddleOCR初始化失败: Unknown argument: det_batch_num
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{/home/featurize/work/ocr_cli.py:32: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+正在初始化PaddleOCR...
+[2025-10-19 00:51:58] 开始初始化PaddleOCR
+[2025-10-19 00:52:05] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-19 00:52:05] 找到 361 张PNG图片
+[2025-10-19 00:52:05] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_005158.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+[2025-10-19 00:52:05] 开始按顺序逐张处理图片
+🔄 开始按顺序逐张处理图片
+[2025-10-19 00:52:05] 开始处理图片: 0032.png
+[2025-10-19 00:52:14] ✅ 图片 0032.png 处理完成，耗时 9.55 秒
+[2025-10-19 00:52:14] 识别内容: F  1  口  □  F  文学运动  *  :  二  古文运动  唐代中期韩愈、柳宗元提倡的一...
+[2025-10-19 00:52:14] 开始处理图片: 0033.png
+[2025-10-19 00:52:27] ❌ 处理图片 0033.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >), &(void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >, phi::TypeTag<int> >::Compute<1, 3, 0, 0, phi::GPUContext const, phi::DenseTensor const, phi::DenseTensor const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&)
+9   void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >)
+10  phi::DnnWorkspaceHandle::ReallocWorkspace(unsigned long)
+11  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+14  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+15  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.216699GB memory on GPU 0, 10.225708GB memory has been allocated and available memory is only 1.434448GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+
+❌ 处理图片 0033.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >), &(void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >, phi::TypeTag<int> >::Compute<1, 3, 0, 0, phi::GPUContext const, phi::DenseTensor const, phi::DenseTensor const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&)
+9   void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >)
+10  phi::DnnWorkspaceHandle::ReallocWorkspace(unsigned long)
+11  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+14  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+15  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.216699GB memory on GPU 0, 10.225708GB memory has been allocated and available memory is only 1.434448GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+[2025-10-19 00:52:27] 开始处理图片: 0034.png
+[2025-10-19 00:52:40] ❌ 处理图片 0034.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.225708GB memory has been allocated and available memory is only 1.434448GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+
+❌ 处理图片 0034.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.225708GB memory has been allocated and available memory is only 1.434448GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+[2025-10-19 00:52:40] 开始处理图片: 0035.png
+[2025-10-19 00:52:53] ❌ 处理图片 0035.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.225708GB memory has been allocated and available memory is only 1.434448GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+
+❌ 处理图片 0035.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.225708GB memory has been allocated and available memory is only 1.434448GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+[2025-10-19 00:52:53] 开始保存识别结果到Markdown文件
+[2025-10-19 00:52:53] ✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+📊 处理统计: 4 张图片
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_005158.log
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{/home/featurize/work/ocr_cli.py:32: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+正在初始化PaddleOCR...
+[2025-10-19 00:55:56] 开始初始化PaddleOCR
+[2025-10-19 00:56:02] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-19 00:56:02] 找到 361 张PNG图片
+[2025-10-19 00:56:02] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_005556.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+[2025-10-19 00:56:02] 开始按顺序逐张处理图片
+🔄 开始按顺序逐张处理图片
+[2025-10-19 00:56:02] 开始处理图片: 0032.png
+[2025-10-19 00:56:12] ✅ 图片 0032.png 处理完成，耗时 9.89 秒
+[2025-10-19 00:56:12] 识别内容: F  1  口  □  1  文学运动  *  :  二  古文运动  唐代中期韩愈、柳宗元提倡的一...
+[2025-10-19 00:56:12] 开始处理图片: 0033.png
+[2025-10-19 00:56:24] ❌ 处理图片 0033.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >), &(void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >, phi::TypeTag<int> >::Compute<1, 3, 0, 0, phi::GPUContext const, phi::DenseTensor const, phi::DenseTensor const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&)
+9   void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >)
+10  phi::DnnWorkspaceHandle::ReallocWorkspace(unsigned long)
+11  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+14  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+15  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.216699GB memory on GPU 0, 10.217896GB memory has been allocated and available memory is only 1.442261GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+
+❌ 处理图片 0033.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >), &(void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >, phi::TypeTag<int> >::Compute<1, 3, 0, 0, phi::GPUContext const, phi::DenseTensor const, phi::DenseTensor const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&)
+9   void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >)
+10  phi::DnnWorkspaceHandle::ReallocWorkspace(unsigned long)
+11  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+14  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+15  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.216699GB memory on GPU 0, 10.217896GB memory has been allocated and available memory is only 1.442261GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+[2025-10-19 00:56:24] 开始处理图片: 0034.png
+[2025-10-19 00:56:37] ❌ 处理图片 0034.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.217896GB memory has been allocated and available memory is only 1.442261GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+
+❌ 处理图片 0034.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.217896GB memory has been allocated and available memory is only 1.442261GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+[2025-10-19 00:56:37] 开始处理图片: 0035.png
+[2025-10-19 00:56:50] ❌ 处理图片 0035.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.217896GB memory has been allocated and available memory is only 1.442261GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+
+❌ 处理图片 0035.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.217896GB memory has been allocated and available memory is only 1.442261GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+[2025-10-19 00:56:50] 开始保存识别结果到Markdown文件
+[2025-10-19 00:56:50] ✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+📊 处理统计: 4 张图片
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_005556.log
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{/home/featurize/work/ocr_cli.py:32: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+正在初始化PaddleOCR...
+[2025-10-19 00:57:05] 开始初始化PaddleOCR
+[2025-10-19 00:57:12] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-19 00:57:12] 找到 361 张PNG图片
+[2025-10-19 00:57:12] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_005705.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+[2025-10-19 00:57:12] 开始按顺序逐张处理图片
+🔄 开始按顺序逐张处理图片
+[2025-10-19 00:57:12] 开始处理图片: 0032.png
+[2025-10-19 00:57:22] ✅ 图片 0032.png 处理完成，耗时 10.03 秒
+[2025-10-19 00:57:22] 识别内容: F  1  口  □  1  文学运动  *  :  二  古文运动  唐代中期韩愈、柳宗元提倡的一...
+[2025-10-19 00:57:22] 开始处理图片: 0033.png
+[2025-10-19 00:57:35] ❌ 处理图片 0033.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >), &(void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >, phi::TypeTag<int> >::Compute<1, 3, 0, 0, phi::GPUContext const, phi::DenseTensor const, phi::DenseTensor const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&)
+9   void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >)
+10  phi::DnnWorkspaceHandle::ReallocWorkspace(unsigned long)
+11  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+14  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+15  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.216699GB memory on GPU 0, 10.217896GB memory has been allocated and available memory is only 1.442261GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+
+❌ 处理图片 0033.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >), &(void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >, phi::TypeTag<int> >::Compute<1, 3, 0, 0, phi::GPUContext const, phi::DenseTensor const, phi::DenseTensor const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&)
+9   void phi::fusion::FusedConv2dAddActKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, phi::DenseTensor const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, std::vector<int, std::allocator<int> > const&, std::vector<int, std::allocator<int> > const&, std::string const&, std::vector<int, std::allocator<int> > const&, int, std::string const&, std::string const&, std::vector<int, std::allocator<int> > const&, bool, int, float, phi::DenseTensor*, std::vector<phi::DenseTensor*, std::allocator<phi::DenseTensor*> >)
+10  phi::DnnWorkspaceHandle::ReallocWorkspace(unsigned long)
+11  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+14  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+15  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.216699GB memory on GPU 0, 10.217896GB memory has been allocated and available memory is only 1.442261GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+[2025-10-19 00:57:35] 开始处理图片: 0034.png
+[2025-10-19 00:57:48] ❌ 处理图片 0034.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.217896GB memory has been allocated and available memory is only 1.442261GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+
+❌ 处理图片 0034.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.217896GB memory has been allocated and available memory is only 1.442261GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+[2025-10-19 00:57:48] 开始处理图片: 0035.png
+[2025-10-19 00:58:01] ❌ 处理图片 0035.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.217896GB memory has been allocated and available memory is only 1.442261GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+
+❌ 处理图片 0035.png 失败: 
+
+--------------------------------------
+C++ Traceback (most recent call last):
+--------------------------------------
+0   paddle::AnalysisPredictor::ZeroCopyRun(bool)
+1   paddle::framework::NaiveExecutor::RunInterpreterCore(std::vector<std::string, std::allocator<std::string > > const&, bool, bool)
+2   paddle::framework::InterpreterCore::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+3   paddle::framework::PirInterpreter::Run(std::vector<std::string, std::allocator<std::string > > const&, bool, bool, bool, bool)
+4   paddle::framework::PirInterpreter::TraceRunImpl()
+5   paddle::framework::PirInterpreter::TraceRunInstructionList(std::vector<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> >, std::allocator<std::unique_ptr<paddle::framework::InstructionBase, std::default_delete<paddle::framework::InstructionBase> > > > const&)
+6   paddle::framework::PirInterpreter::RunInstructionBase(paddle::framework::InstructionBase*)
+7   paddle::framework::PhiKernelInstruction::Run()
+8   void phi::KernelImpl<void (*)(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*), &(void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*))>::KernelCallHelper<paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*, phi::TypeTag<int> >::Compute<1, 1, 0, 0, phi::GPUContext const, phi::DenseTensor const>(phi::KernelContext*, phi::GPUContext const&, phi::DenseTensor const&)
+9   void phi::NearestInterpKernel<float, phi::GPUContext>(phi::GPUContext const&, phi::DenseTensor const&, paddle::optional<phi::DenseTensor> const&, paddle::optional<std::vector<phi::DenseTensor const*, std::allocator<phi::DenseTensor const*> > > const&, paddle::optional<phi::DenseTensor> const&, std::string const&, int, int, int, std::vector<float, std::allocator<float> > const&, std::string const&, bool, int, phi::DenseTensor*)
+10  float* phi::DeviceContext::Alloc<float>(phi::TensorBase*, unsigned long, bool) const
+11  phi::DenseTensor::AllocateFrom(phi::Allocator*, phi::DataType, unsigned long, bool)
+12  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+13  paddle::memory::allocation::StatAllocator::AllocateImpl(unsigned long)
+14  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+15  paddle::memory::allocation::Allocator::Allocate(unsigned long)
+16  std::string phi::enforce::GetCompleteTraceBackString<std::string >(std::string&&, char const*, int)
+17  common::enforce::GetCurrentTraceBackString[abi:cxx11](bool)
+
+----------------------
+Error Message Summary:
+----------------------
+ResourceExhaustedError: 
+
+Out of memory error on GPU 0. Cannot allocate 3.027344GB memory on GPU 0, 10.217896GB memory has been allocated and available memory is only 1.442261GB.
+
+Please check whether there is any other process using GPU 0.
+1. If yes, please stop them, or start PaddlePaddle on another GPU.
+2. If no, please decrease the batch size of your model. 
+ (at ../paddle/phi/core/memory/allocation/cuda_allocator.cc:71)
+
+[2025-10-19 00:58:01] 开始保存识别结果到Markdown文件
+[2025-10-19 00:58:01] ✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+📊 处理统计: 4 张图片
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_005705.log
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{/home/featurize/work/ocr_cli.py:32: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None)[0m
+[32mUsing official model (PP-OCRv5_mobile_det), the model files will be automatically downloaded and saved in `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_det`.[0m
+正在初始化PaddleOCR...
+[2025-10-19 00:58:16] 开始初始化PaddleOCR
+Fetching 6 files:   0%|                                                                           | 0/6 [00:00<?, ?it/s]
+inference.json: 0.00B [00:00, ?B/s][Ainference.json: 230kB [00:00, 85.6MB/s]
+
+README.md: 0.00B [00:00, ?B/s][A
+
+.gitattributes: 0.00B [00:00, ?B/s][A[A.gitattributes: 1.57kB [00:00, 3.15MB/s]
+README.md: 16.2kB [00:00, 7.85MB/s]
+Fetching 6 files:  17%|███████████▏                                                       | 1/6 [00:00<00:03,  1.41it/s]
+inference.yml:   0%|                                                                          | 0.00/903 [00:00<?, ?B/s][Ainference.yml: 100%|███████████████████████████████████████████████████████████████████| 903/903 [00:00<00:00, 2.58MB/s]
+
+config.json: 0.00B [00:00, ?B/s][Aconfig.json: 2.87kB [00:00, 4.80MB/s]
+
+inference.pdiparams:   0%|                                                                  | 0.00/4.69M [00:00<?, ?B/s][A
+inference.pdiparams: 100%|█████████████████████████████████████████████████████████| 4.69M/4.69M [00:03<00:00, 1.43MB/s][Ainference.pdiparams: 100%|█████████████████████████████████████████████████████████| 4.69M/4.69M [00:03<00:00, 1.43MB/s]
+Fetching 6 files:  83%|███████████████████████████████████████████████████████▊           | 5/6 [00:04<00:00,  1.21it/s]Fetching 6 files: 100%|███████████████████████████████████████████████████████████████████| 6/6 [00:04<00:00,  1.46it/s]
+[32mCreating model: ('PP-OCRv5_mobile_rec', None)[0m
+[32mUsing official model (PP-OCRv5_mobile_rec), the model files will be automatically downloaded and saved in `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_rec`.[0m
+Fetching 6 files:   0%|                                                                           | 0/6 [00:00<?, ?it/s]
+.gitattributes: 0.00B [00:00, ?B/s][A.gitattributes: 1.57kB [00:00, 3.30MB/s]
+Fetching 6 files:  17%|███████████▏                                                       | 1/6 [00:00<00:02,  2.41it/s]
+README.md: 0.00B [00:00, ?B/s][AREADME.md: 16.1kB [00:00, 21.3MB/s]
+
+inference.yml: 0.00B [00:00, ?B/s][A
+
+inference.json: 0.00B [00:00, ?B/s][A[Ainference.json: 218kB [00:00, 80.5MB/s]
+inference.yml: 148kB [00:00, 2.43MB/s]
+
+config.json: 0.00B [00:00, ?B/s][Aconfig.json: 352kB [00:00, 6.12MB/s]
+Fetching 6 files:  50%|█████████████████████████████████▌                                 | 3/6 [00:00<00:00,  4.23it/s]
+inference.pdiparams:   0%|                                                                  | 0.00/16.5M [00:00<?, ?B/s][A
+inference.pdiparams: 100%|█████████████████████████████████████████████████████████| 16.5M/16.5M [00:01<00:00, 11.4MB/s][Ainference.pdiparams: 100%|█████████████████████████████████████████████████████████| 16.5M/16.5M [00:01<00:00, 11.4MB/s]
+Fetching 6 files:  83%|███████████████████████████████████████████████████████▊           | 5/6 [00:02<00:00,  2.00it/s]Fetching 6 files: 100%|███████████████████████████████████████████████████████████████████| 6/6 [00:02<00:00,  2.65it/s]
+[2025-10-19 00:58:27] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-19 00:58:27] 找到 361 张PNG图片
+[2025-10-19 00:58:27] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_005816.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+[2025-10-19 00:58:27] 开始按顺序逐张处理图片
+🔄 开始按顺序逐张处理图片
+[2025-10-19 00:58:27] 开始处理图片: 0032.png
+[2025-10-19 00:58:34] ✅ 图片 0032.png 处理完成，耗时 7.34 秒
+[2025-10-19 00:58:34] 识别内容: 文学运动  古文运动  唐代中期韩愈、柳宗元提倡的一种文体和文学语言的革  新运动。  古文”是和魏...
+[2025-10-19 00:58:34] 开始处理图片: 0033.png
+[2025-10-19 00:58:41] ✅ 图片 0033.png 处理完成，耗时 6.71 秒
+[2025-10-19 00:58:41] 识别内容: x  张文章应是作者真实情感的流露，反对无病呻吟，  矫揉造  作的不良文风，指出：  “大凡物不得...
+[2025-10-19 00:58:41] 开始处理图片: 0034.png
+[2025-10-19 00:58:48] ✅ 图片 0034.png 处理完成，耗时 6.75 秒
+[2025-10-19 00:58:48] 识别内容: 这些征集的民歌也称作  “乐府  新乐府是用新题材创作的  0  乐曲和诗，和乐府古题相对而称。唐代...
+[2025-10-19 00:58:48] 开始处理图片: 0035.png
+[2025-10-19 00:58:53] ✅ 图片 0035.png 处理完成，耗时 5.40 秒
+[2025-10-19 00:58:53] 识别内容: 不同程度上反映了社会的本质  新乐府运动作为文学史上的一种文学思潮，对后世文学  产生了广泛的影响，...
+[2025-10-19 00:58:53] 开始保存识别结果到Markdown文件
+[2025-10-19 00:58:53] ✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+📊 处理统计: 4 张图片
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_005816.log
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{/home/featurize/work/ocr_cli.py:32: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_rec`.[0m
+正在初始化PaddleOCR...
+[2025-10-19 01:00:02] 开始初始化PaddleOCR
+[2025-10-19 01:00:06] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-19 01:00:06] 找到 361 张PNG图片
+[2025-10-19 01:00:06] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_010002.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+[2025-10-19 01:00:06] 开始按顺序逐张处理图片
+🔄 开始按顺序逐张处理图片
+[2025-10-19 01:00:06] 开始处理图片: 0032.png
+[2025-10-19 01:00:12] ✅ 图片 0032.png 处理完成，耗时 6.33 秒
+[2025-10-19 01:00:12] 识别内容: 文学运动  古文运动  唐代中期韩愈、柳宗元提倡的一种文体和文学语言的革  新运动。  古文”是和魏...
+[2025-10-19 01:00:12] 开始处理图片: 0033.png
+[2025-10-19 01:00:19] ✅ 图片 0033.png 处理完成，耗时 6.47 秒
+[2025-10-19 01:00:19] 识别内容: x  张文章应是作者真实情感的流露，反对无病呻吟，  矫揉造  作的不良文风，指出：  “大凡物不得...
+[2025-10-19 01:00:19] 开始处理图片: 0034.png
+[2025-10-19 01:00:25] ✅ 图片 0034.png 处理完成，耗时 6.76 秒
+[2025-10-19 01:00:25] 识别内容: 这些征集的民歌也称作  “乐府  新乐府是用新题材创作的  0  乐曲和诗，和乐府古题相对而称。唐代...
+[2025-10-19 01:00:25] 开始处理图片: 0035.png
+[2025-10-19 01:00:31] ✅ 图片 0035.png 处理完成，耗时 5.28 秒
+[2025-10-19 01:00:31] 识别内容: 不同程度上反映了社会的本质  新乐府运动作为文学史上的一种文学思潮，对后世文学  产生了广泛的影响，...
+[2025-10-19 01:00:31] 开始保存识别结果到Markdown文件
+[2025-10-19 01:00:31] ✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+📊 处理统计: 4 张图片
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_010002.log
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{/home/featurize/work/ocr_cli.py:32: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files alre
