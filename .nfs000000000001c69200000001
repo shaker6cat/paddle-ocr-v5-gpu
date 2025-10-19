@@ -1591,4 +1591,1028 @@ Please check whether there is any other process using GPU 0.
 ]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{/home/featurize/work/ocr_cli.py:32: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
   self.ocr = PaddleOCR(
 [32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
-[32mModel files alre
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_rec`.[0m
+正在初始化PaddleOCR...
+[2025-10-19 01:03:58] 开始初始化PaddleOCR
+[2025-10-19 01:04:02] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-19 01:04:02] 找到 361 张PNG图片
+[2025-10-19 01:04:02] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_010358.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+[2025-10-19 01:04:02] 开始按顺序逐张处理图片
+🔄 开始按顺序逐张处理图片
+[2025-10-19 01:04:02] 开始处理图片: 0032.png
+[2025-10-19 01:04:08] ✅ 图片 0032.png 处理完成，耗时 6.31 秒
+[2025-10-19 01:04:08] 识别内容: 文学运动  古文运动  唐代中期韩愈、柳宗元提倡的一种文体和文学语言的革  新运动。  古文”是和魏...
+[2025-10-19 01:04:08] 开始处理图片: 0033.png
+[2025-10-19 01:04:15] ✅ 图片 0033.png 处理完成，耗时 6.91 秒
+[2025-10-19 01:04:15] 识别内容: x  张文章应是作者真实情感的流露，反对无病呻吟，  矫揉造  作的不良文风，指出：  “大凡物不得...
+[2025-10-19 01:04:15] 开始处理图片: 0034.png
+[2025-10-19 01:04:22] ✅ 图片 0034.png 处理完成，耗时 7.13 秒
+[2025-10-19 01:04:22] 识别内容: 这些征集的民歌也称作  “乐府  新乐府是用新题材创作的  0  乐曲和诗，和乐府古题相对而称。唐代...
+[2025-10-19 01:04:22] 开始处理图片: 0035.png
+[2025-10-19 01:04:28] ✅ 图片 0035.png 处理完成，耗时 5.56 秒
+[2025-10-19 01:04:28] 识别内容: 不同程度上反映了社会的本质  新乐府运动作为文学史上的一种文学思潮，对后世文学  产生了广泛的影响，...
+[2025-10-19 01:04:28] 开始保存识别结果到Markdown文件
+[2025-10-19 01:04:28] ✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+📊 处理统计: 4 张图片
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_010358.log
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo "执行命令: python ocr_cli.py $@"; } >> ocr_review.log 2>&1 && python ocr_cli.py "$@" | tee -a ocr_review.log && echo "----------------------------------------" >> ocr_review.log 2>&1[K
+[K[A[18C[1B[K[A[18C[?1l>[?2004l[1B
+]2;{ echo "=== 复盘记录: $(date '+%Y-%m-%d %H:%M:%S') ==="; echo ; } >> ]1;{/home/featurize/work/ocr_cli.py:32: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_rec`.[0m
+正在初始化PaddleOCR...
+[2025-10-19 01:08:23] 开始初始化PaddleOCR
+[2025-10-19 01:08:27] PaddleOCR初始化成功
+✅ PaddleOCR初始化成功
+============================================================
+🚀 开始批量OCR识别
+============================================================
+[2025-10-19 01:08:27] 找到 361 张PNG图片
+[2025-10-19 01:08:27] 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📝 筛选出 4 张测试图片: 0032.png, 0033.png, 0034.png, 0035.png
+📊 总共需要处理 4 张图片
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_010823.log
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+============================================================
+[2025-10-19 01:08:27] 开始按顺序逐张处理图片
+🔄 开始按顺序逐张处理图片
+[2025-10-19 01:08:27] 开始处理图片: 0032.png
+[2025-10-19 01:08:33] ✅ 图片 0032.png 处理完成，耗时 6.30 秒
+[2025-10-19 01:08:33] 识别内容: 文学运动  古文运动  唐代中期韩愈、柳宗元提倡的一种文体和文学语言的革  新运动。  古文”是和魏...
+[2025-10-19 01:08:33] 开始处理图片: 0033.png
+[2025-10-19 01:08:40] ✅ 图片 0033.png 处理完成，耗时 6.84 秒
+[2025-10-19 01:08:40] 识别内容: x  张文章应是作者真实情感的流露，反对无病呻吟，  矫揉造  作的不良文风，指出：  “大凡物不得...
+[2025-10-19 01:08:40] 开始处理图片: 0034.png
+[2025-10-19 01:08:47] ✅ 图片 0034.png 处理完成，耗时 7.07 秒
+[2025-10-19 01:08:47] 识别内容: 这些征集的民歌也称作  “乐府  新乐府是用新题材创作的  0  乐曲和诗，和乐府古题相对而称。唐代...
+[2025-10-19 01:08:47] 开始处理图片: 0035.png
+[2025-10-19 01:08:53] ✅ 图片 0035.png 处理完成，耗时 5.50 秒
+[2025-10-19 01:08:53] 识别内容: 不同程度上反映了社会的本质  新乐府运动作为文学史上的一种文学思潮，对后世文学  产生了广泛的影响，...
+[2025-10-19 01:08:53] 开始保存识别结果到Markdown文件
+[2025-10-19 01:08:53] ✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+✅ 识别结果已保存到: /home/featurize/data/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+📊 处理统计: 4 张图片
+📄 输出文件: /home/featurize/data/中国文学史名词解释.md
+📝 日志文件: /home/featurize/work/ocr_execution_20251019_010823.log
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h[7mpython3 ocr_cli.py \[27m
+[7m  --input-dir "/featurize/data" \[27m[K
+[7m  --pattern "*.png" \[27m[K
+[7m  --out "/featurize/work" \[27m[K
+[7m  --model PP-OCRv5_mobile \[27m[K
+[7m  --batch-size 10 \[27m[K
+[7m  --device gpu \[27m[K
+[7m  --page-range 32-34[27m[K[7A[27mp[27my[27mt[27mh[27mo[27mn[27m3[27m [27mo[27mc[27mr[27m_[27mc[27ml[27mi[27m.[27mp[27my[27m [27m\[1B[27m [27m [27m-[27m-[27mi[27mn[27mp[27mu[27mt[27m-[27md[27mi[27mr[27m [27m"[27m/[27mf[27me[27ma[27mt[27mu[27mr[27mi[27mz[27me[27m/[27md[27ma[27mt[27ma[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mp[27ma[27mt[27mt[27me[27mr[27mn[27m [27m"[27m*[27m.[27mp[27mn[27mg[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mo[27mu[27mt[27m [27m"[27m/[27mf[27me[27ma[27mt[27mu[27mr[27mi[27mz[27me[27m/[27mw[27mo[27mr[27mk[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mm[27mo[27md[27me[27ml[27m [27mP[27mP[27m-[27mO[27mC[27mR[27mv[27m5[27m_[27mm[27mo[27mb[27mi[27ml[27me[27m [27m\[1B[27m [27m [27m-[27m-[27mb[27ma[27mt[27mc[27mh[27m-[27ms[27mi[27mz[27me[27m [27m1[27m0[27m [27m\[1B[27m [27m [27m-[27m-[27md[27me[27mv[27mi[27mc[27me[27m [27mg[27mp[27mu[27m [27m\[1B[27m [27m [27m-[27m-[27mp[27ma[27mg[27me[27m-[27mr[27ma[27mn[27mg[27me[27m [27m3[27m2[27m-[27m3[27m4[?1l>[?2004l
+]2;python3 ocr_cli.py --input-dir "/featurize/data" --pattern "*.png" --out     ]1;python3正在初始化 PaddleOCR...
+[2025-10-19 01:27:42] 开始初始化 PaddleOCR
+⚠️ 无法写入日志文件: [Errno 2] No such file or directory: '/featurize/ocr_20251019_012742.log'
+/home/featurize/work/ocr_cli.py:92: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_rec`.[0m
+[2025-10-19 01:27:46] PaddleOCR 初始化成功
+⚠️ 无法写入日志文件: [Errno 2] No such file or directory: '/featurize/ocr_20251019_012742.log'
+✅ PaddleOCR 初始化成功
+============================================================
+🚀 开始批量 OCR 识别
+============================================================
+[2025-10-19 01:27:46] 找到 0 张图片
+⚠️ 无法写入日志文件: [Errno 2] No such file or directory: '/featurize/ocr_20251019_012742.log'
+❌ 未找到任何图片
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython3 ocr_cli.py \
+  --input-dir "/featurize/data" \[K
+  --pattern "*.png" \[K
+  --out "/featurize/work" \[K
+  --model PP-OCRv5_mobile \[K
+  --batch-size 10 \[K
+  --device gpu \[K
+  --page-range 32-34[K[7A[14C[1B[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1B[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1B[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1B[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1B[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1B[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1B[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C032-34032-34[1C[1C[1C034034[?1l>[?2004l
+]2;python3 ocr_cli.py --input-dir "/featurize/data" --pattern "*.png" --out     ]1;python3正在初始化 PaddleOCR...
+[2025-10-19 01:30:39] 开始初始化 PaddleOCR
+⚠️ 无法写入日志文件: [Errno 2] No such file or directory: '/featurize/ocr_20251019_013039.log'
+/home/featurize/work/ocr_cli.py:92: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_rec`.[0m
+[2025-10-19 01:30:43] PaddleOCR 初始化成功
+⚠️ 无法写入日志文件: [Errno 2] No such file or directory: '/featurize/ocr_20251019_013039.log'
+✅ PaddleOCR 初始化成功
+============================================================
+🚀 开始批量 OCR 识别
+============================================================
+[2025-10-19 01:30:43] 找到 0 张图片
+⚠️ 无法写入日志文件: [Errno 2] No such file or directory: '/featurize/ocr_20251019_013039.log'
+❌ 未找到任何图片
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h[7mpython3 ocr_cli.py \[27m
+[7m  --input-dir "/data" \[27m[K
+[7m  --pattern "*.png" \[27m[K
+[7m  --out "/work" \[27m[K
+[7m  --model PP-OCRv5_mobile \[27m[K
+[7m  --batch-size 10 \[27m[K
+[7m  --device gpu \[27m[K
+[7m  --page-range 32-34[27m[K[7A[27mp[27my[27mt[27mh[27mo[27mn[27m3[27m [27mo[27mc[27mr[27m_[27mc[27ml[27mi[27m.[27mp[27my[27m [27m\[1B[27m [27m [27m-[27m-[27mi[27mn[27mp[27mu[27mt[27m-[27md[27mi[27mr[27m [27m"[27m/[27md[27ma[27mt[27ma[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mp[27ma[27mt[27mt[27me[27mr[27mn[27m [27m"[27m*[27m.[27mp[27mn[27mg[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mo[27mu[27mt[27m [27m"[27m/[27mw[27mo[27mr[27mk[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mm[27mo[27md[27me[27ml[27m [27mP[27mP[27m-[27mO[27mC[27mR[27mv[27m5[27m_[27mm[27mo[27mb[27mi[27ml[27me[27m [27m\[1B[27m [27m [27m-[27m-[27mb[27ma[27mt[27mc[27mh[27m-[27ms[27mi[27mz[27me[27m [27m1[27m0[27m [27m\[1B[27m [27m [27m-[27m-[27md[27me[27mv[27mi[27mc[27me[27m [27mg[27mp[27mu[27m [27m\[1B[27m [27m [27m-[27m-[27mp[27ma[27mg[27me[27m-[27mr[27ma[27mn[27mg[27me[27m [27m3[27m2[27m-[27m3[27m4[?1l>[?2004l
+]2;python3 ocr_cli.py --input-dir "/data" --pattern "*.png" --out "/work" --mode]1;python3正在初始化 PaddleOCR...
+[2025-10-19 01:31:22] 开始初始化 PaddleOCR
+⚠️ 无法写入日志文件: [Errno 13] Permission denied: '/ocr_20251019_013122.log'
+/home/featurize/work/ocr_cli.py:92: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_rec`.[0m
+[2025-10-19 01:31:26] PaddleOCR 初始化成功
+⚠️ 无法写入日志文件: [Errno 13] Permission denied: '/ocr_20251019_013122.log'
+✅ PaddleOCR 初始化成功
+============================================================
+🚀 开始批量 OCR 识别
+============================================================
+[2025-10-19 01:31:26] 找到 0 张图片
+⚠️ 无法写入日志文件: [Errno 13] Permission denied: '/ocr_20251019_013122.log'
+❌ 未找到任何图片
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h[7m# 看看你给的目录里到底有没有 png[27m
+[7mfind /featurize/data -type f -name "*.png" | head[27m[K[A[35D[27m#[27m [27m看[27m[27m看[27m[27m你[27m[27m给[27m[27m的[27m[27m目[27m[27m录[27m[27m里[27m[27m到[27m[27m底[27m[27m有[27m[27m没[27m[27m有[27m[27m [27mp[27mn[27mg[1B[27mf[27mi[27mn[27md[27m [27m/[27mf[27me[27ma[27mt[27mu[27mr[27mi[27mz[27me[27m/[27md[27ma[27mt[27ma[27m [27m-[27mt[27my[27mp[27me[27m [27mf[27m [27m-[27mn[27ma[27mm[27me[27m [27m"[27m*[27m.[27mp[27mn[27mg[27m"[27m [27m|[27m [27mh[27me[27ma[27md[?1l>[?2004l
+]2;find /featurize/data -type f -name "*.png" | head]1;#find: ‘/featurize/data’: No such file or directory
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hcccc  ccd ..[?1l>[?2004l
+]2;cd ..]1;cd[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~]1;~]7;file://featurize/home/featurize\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36m~[01;34m[01;34m[00m [K[?1h=[?2004hlls[?1l>[?2004l
+]2;ls --color=tty]1;lsIFLOW.md  [0m[01;34mapp[0m  [01;34mdata[0m  [01;34mwork[0m  服务器注意事项.txt
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~]1;~]7;file://featurize/home/featurize\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36m~[01;34m[01;34m[00m [K[?1h=[?2004hccd ..[?1l>[?2004l
+]2;cd ..]1;cd[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:/home]1;/home]7;file://featurize/home\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36m/home[01;34m[01;34m[00m [K[?1h=[?2004hlls[?1l>[?2004l
+]2;ls --color=tty]1;ls[0m[01;34mfeaturize[0m
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:/home]1;/home]7;file://featurize/home\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36m/home[01;34m[01;34m[00m [K[?1h=[?2004hccd ..[?1l>[?2004l
+]2;cd ..]1;cd[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:/]1;/]7;file://featurize/\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36m/[01;34m[01;34m[00m [K[?1h=[?2004hlls[?1l>[?2004l
+]2;ls --color=tty]1;ls[0m[01;36mbin[0m   [01;36mcloud[0m  [01;34menvironment[0m  [01;34mhome[0m  [01;36mlib32[0m  [01;36mlibx32[0m      [01;34mmedia[0m  [01;34mopt[0m   [01;34mroot[0m  [01;36msbin[0m  [01;34msrv[0m  [30;42mtmp[0m  [01;34mvar[0m
+[01;34mboot[0m  [01;34mdev[0m    [01;34metc[0m          [01;36mlib[0m   [01;36mlib64[0m  [01;34mlost+found[0m  [01;34mmnt[0m    [01;34mproc[0m  [01;34mrun[0m   [01;34msnap[0m  [01;34msys[0m  [01;34musr[0m
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:/]1;/]7;file://featurize/\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36m/[01;34m[01;34m[00m [K[?1h=[?2004hccd home[?1l>[?2004l
+]2;cd home]1;cd[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:/home]1;/home]7;file://featurize/home\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36m/home[01;34m[01;34m[00m [K[?1h=[?2004hccd featurize[1m/[0m[0m [?1l>[?2004l
+]2;cd featurize]1;cd[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~]1;~]7;file://featurize/home/featurize\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36m~[01;34m[01;34m[00m [K[?1h=[?2004hlls[?1l>[?2004l
+]2;ls --color=tty]1;lsIFLOW.md  [0m[01;34mapp[0m  [01;34mdata[0m  [01;34mwork[0m  服务器注意事项.txt
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~]1;~]7;file://featurize/home/featurize\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36m~[01;34m[01;34m[00m [K[?1h=[?2004hccd work[?1l>[?2004l
+]2;cd work]1;cd[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h[7mpython3 ocr_cli.py \[27m
+[7m  --input-dir "/home/featurize/data" \[27m[K
+[7m  --pattern "*.png" \[27m[K
+[7m  --out "/home/featurize/work" \[27m[K
+[7m  --model PP-OCRv5_mobile \[27m[K
+[7m  --batch-size 10 \[27m[K
+[7m  --device gpu \[27m[K
+[7m  --page-range 32-34[27m[K[7A[27mp[27my[27mt[27mh[27mo[27mn[27m3[27m [27mo[27mc[27mr[27m_[27mc[27ml[27mi[27m.[27mp[27my[27m [27m\[1B[27m [27m [27m-[27m-[27mi[27mn[27mp[27mu[27mt[27m-[27md[27mi[27mr[27m [27m"[27m/[27mh[27mo[27mm[27me[27m/[27mf[27me[27ma[27mt[27mu[27mr[27mi[27mz[27me[27m/[27md[27ma[27mt[27ma[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mp[27ma[27mt[27mt[27me[27mr[27mn[27m [27m"[27m*[27m.[27mp[27mn[27mg[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mo[27mu[27mt[27m [27m"[27m/[27mh[27mo[27mm[27me[27m/[27mf[27me[27ma[27mt[27mu[27mr[27mi[27mz[27me[27m/[27mw[27mo[27mr[27mk[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mm[27mo[27md[27me[27ml[27m [27mP[27mP[27m-[27mO[27mC[27mR[27mv[27m5[27m_[27mm[27mo[27mb[27mi[27ml[27me[27m [27m\[1B[27m [27m [27m-[27m-[27mb[27ma[27mt[27mc[27mh[27m-[27ms[27mi[27mz[27me[27m [27m1[27m0[27m [27m\[1B[27m [27m [27m-[27m-[27md[27me[27mv[27mi[27mc[27me[27m [27mg[27mp[27mu[27m [27m\[1B[27m [27m [27m-[27m-[27mp[27ma[27mg[27me[27m-[27mr[27ma[27mn[27mg[27me[27m [27m3[27m2[27m-[27m3[27m4[?1l>[?2004l
+]2;python3 ocr_cli.py --input-dir "/home/featurize/data" --pattern "*.png" --out]1;python3  File "/home/featurize/work/ocr_cli.py", line 80
+    self.log_file = Path("/home/featurize/work") / 
+                                                   ^
+SyntaxError: invalid syntax
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;31m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython3 ocr_cli.py \
+  --input-dir "/home/featurize/data" \[K
+  --pattern "*.png" \[K
+  --out "/home/featurize/work" \[K
+  --model PP-OCRv5_mobile \[K
+  --batch-size 10 \[K
+  --device gpu \[K
+  --page-range 32-34[K[7A[14C[?1l>[?2004l[7B
+]2;python3 ocr_cli.py --input-dir "/home/featurize/data" --pattern "*.png" --out]1;python3正在初始化 PaddleOCR...
+[2025-10-19 01:37:10] 开始初始化 PaddleOCR
+/home/featurize/work/ocr_cli.py:92: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_rec`.[0m
+[2025-10-19 01:37:14] PaddleOCR 初始化成功
+✅ PaddleOCR 初始化成功
+============================================================
+🚀 开始批量 OCR 识别
+============================================================
+[2025-10-19 01:37:14] 找到 3 张图片
+📊 共 3 张图片 | 日志: /home/featurize/work/ocr_20251019_013710.log
+============================================================
+[2025-10-19 01:37:14] 开始处理图片: 0063.png
+[2025-10-19 01:37:19] ✅ 图片 0063.png 处理完成，耗时 5.33 秒
+[2025-10-19 01:37:19] 开始处理图片: 0064.png
+[2025-10-19 01:37:24] ✅ 图片 0064.png 处理完成，耗时 5.49 秒
+[2025-10-19 01:37:24] 开始处理图片: 0065.png
+[2025-10-19 01:37:31] ✅ 图片 0065.png 处理完成，耗时 6.24 秒
+[2025-10-19 01:37:31] 开始保存识别结果到 Markdown 文件
+[2025-10-19 01:37:31] ❌ 保存结果失败: [Errno 21] Is a directory: '/home/featurize/work'
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;31m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h[7mpython3 ocr_cli.py \[27m
+[7m  --input-dir "/home/featurize/data" \[27m[K
+[7m  --pattern "*.png" \[27m[K
+[7m  --out "/home/featurize/work/中国文学史名词解释.md" \[27m[K
+[7m  --model PP-OCRv5_mobile \[27m[K
+[7m  --batch-size 10 \[27m[K
+[7m  --device gpu \[27m[K
+[7m  --page-range 32-34[27m[K[7A[27mp[27my[27mt[27mh[27mo[27mn[27m3[27m [27mo[27mc[27mr[27m_[27mc[27ml[27mi[27m.[27mp[27my[27m [27m\[1B[27m [27m [27m-[27m-[27mi[27mn[27mp[27mu[27mt[27m-[27md[27mi[27mr[27m [27m"[27m/[27mh[27mo[27mm[27me[27m/[27mf[27me[27ma[27mt[27mu[27mr[27mi[27mz[27me[27m/[27md[27ma[27mt[27ma[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mp[27ma[27mt[27mt[27me[27mr[27mn[27m [27m"[27m*[27m.[27mp[27mn[27mg[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mo[27mu[27mt[27m [27m"[27m/[27mh[27mo[27mm[27me[27m/[27mf[27me[27ma[27mt[27mu[27mr[27mi[27mz[27me[27m/[27mw[27mo[27mr[27mk[27m/[27m中[27m[27m国[27m[27m文[27m[27m学[27m[27m史[27m[27m名[27m[27m词[27m[27m解[27m[27m释[27m[27m.[27mm[27md[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mm[27mo[27md[27me[27ml[27m [27mP[27mP[27m-[27mO[27mC[27mR[27mv[27m5[27m_[27mm[27mo[27mb[27mi[27ml[27me[27m [27m\[1B[27m [27m [27m-[27m-[27mb[27ma[27mt[27mc[27mh[27m-[27ms[27mi[27mz[27me[27m [27m1[27m0[27m [27m\[1B[27m [27m [27m-[27m-[27md[27me[27mv[27mi[27mc[27me[27m [27mg[27mp[27mu[27m [27m\[1B[27m [27m [27m-[27m-[27mp[27ma[27mg[27me[27m-[27mr[27ma[27mn[27mg[27me[27m [27m3[27m2[27m-[27m3[27m4[?1l>[?2004l
+]2;python3 ocr_cli.py --input-dir "/home/featurize/data" --pattern "*.png" --out]1;python3正在初始化 PaddleOCR...
+[2025-10-19 01:39:57] 开始初始化 PaddleOCR
+/home/featurize/work/ocr_cli.py:92: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_rec`.[0m
+[2025-10-19 01:40:01] PaddleOCR 初始化成功
+✅ PaddleOCR 初始化成功
+============================================================
+🚀 开始批量 OCR 识别
+============================================================
+[2025-10-19 01:40:01] 找到 3 张图片
+📊 共 3 张图片 | 日志: /home/featurize/work/ocr_20251019_013957.log
+============================================================
+[2025-10-19 01:40:01] 开始处理图片: 0063.png
+[2025-10-19 01:40:07] ✅ 图片 0063.png 处理完成，耗时 5.37 秒
+[2025-10-19 01:40:07] 开始处理图片: 0064.png
+[2025-10-19 01:40:12] ✅ 图片 0064.png 处理完成，耗时 5.50 秒
+[2025-10-19 01:40:12] 开始处理图片: 0065.png
+[2025-10-19 01:40:18] ✅ 图片 0065.png 处理完成，耗时 5.97 秒
+[2025-10-19 01:40:18] 开始保存识别结果到 Markdown 文件
+✅ 识别结果已保存到: /home/featurize/work/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hppython final_test-Copy.py[?1l>[?2004l
+]2;python final_test-Copy.py]1;pythonpython: can't open file '/home/featurize/work/final_test-Copy.py': [Errno 2] No such file or directory
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;31m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython final_test-Copy.py1.py[?1l>[?2004l
+]2;python final_test-Copy1.py]1;python/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+<class 'paddlex.inference.pipelines.ocr.result.OCRResult'>
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython final_test-Copy1.py[?1l>[?2004l
+]2;python final_test-Copy1.py]1;python/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+<class 'paddlex.inference.pipelines.ocr.result.OCRResult'>
+Traceback (most recent call last):
+  File "/home/featurize/work/final_test-Copy1.py", line 5, in <module>
+    print(res.__dict__)
+          ^^^
+NameError: name 'res' is not defined
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;31m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython final_test-Copy1.py.py [19D3 ocr_cli.py \     
+  --input-dir "/home/featurize/data" \[K
+  --pattern "*.png" \[K
+  --out "/home/featurize/work/中国文学史名词解释.md" \[K
+  --model PP-OCRv5_mobile \[K
+  --batch-size 10 \[K
+  --device gpu \[K
+  --page-range 32-34[K[7A[14C[?1l>[?2004l[7B
+]2;python3 ocr_cli.py --input-dir "/home/featurize/data" --pattern "*.png" --out]1;python3  File "/home/featurize/work/ocr_cli.py", line 141
+    if result and len(result) > 0:
+    ^^
+SyntaxError: expected 'except' or 'finally' block
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;31m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython3 ocr_cli.py \
+  --input-dir "/home/featurize/data" \[K
+  --pattern "*.png" \[K
+  --out "/home/featurize/work/中国文学史名词解释.md" \[K
+  --model PP-OCRv5_mobile \[K
+  --batch-size 10 \[K
+  --device gpu \[K
+  --page-range 32-34[K[7A[14C[?1l>[?2004l[7B
+]2;python3 ocr_cli.py --input-dir "/home/featurize/data" --pattern "*.png" --out]1;python3  File "/home/featurize/work/ocr_cli.py", line 134
+    image_path = self.data_folder / image_file
+    ^
+IndentationError: expected an indented block after function definition on line 133
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;31m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython3 ocr_cli.py \
+  --input-dir "/home/featurize/data" \[K
+  --pattern "*.png" \[K
+  --out "/home/featurize/work/中国文学史名词解释.md" \[K
+  --model PP-OCRv5_mobile \[K
+  --batch-size 10 \[K
+  --device gpu \[K
+  --page-range 32-34[K[7A[14C[?1l>[?2004l[7B
+]2;python3 ocr_cli.py --input-dir "/home/featurize/data" --pattern "*.png" --out]1;python3  File "/home/featurize/work/ocr_cli.py", line 134
+    image_path = self.data_folder / image_file
+    ^
+IndentationError: expected an indented block after function definition on line 133
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;31m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython3 ocr_cli.py \
+  --input-dir "/home/featurize/data" \[K
+  --pattern "*.png" \[K
+  --out "/home/featurize/work/中国文学史名词解释.md" \[K
+  --model PP-OCRv5_mobile \[K
+  --batch-size 10 \[K
+  --device gpu \[K
+  --page-range 32-34[K[7A[14C[?1l>[?2004l[7B
+]2;python3 ocr_cli.py --input-dir "/home/featurize/data" --pattern "*.png" --out]1;python3正在初始化 PaddleOCR...
+[2025-10-19 02:08:12] 开始初始化 PaddleOCR
+/home/featurize/work/ocr_cli.py:92: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_rec`.[0m
+[2025-10-19 02:08:16] PaddleOCR 初始化成功
+✅ PaddleOCR 初始化成功
+============================================================
+🚀 开始批量 OCR 识别
+============================================================
+[2025-10-19 02:08:16] 找到 3 张图片
+📊 共 3 张图片 | 日志: /home/featurize/work/ocr_20251019_020812.log
+============================================================
+[2025-10-19 02:08:16] 开始处理图片: 0063.png
+[2025-10-19 02:08:21] ✅ 图片 0063.png 处理完成，耗时 5.28 秒
+[2025-10-19 02:08:21] 开始处理图片: 0064.png
+[2025-10-19 02:08:27] ✅ 图片 0064.png 处理完成，耗时 5.39 秒
+[2025-10-19 02:08:27] 开始处理图片: 0065.png
+[2025-10-19 02:08:33] ✅ 图片 0065.png 处理完成，耗时 5.91 秒
+[2025-10-19 02:08:33] 开始保存识别结果到 Markdown 文件
+✅ 识别结果已保存到: /home/featurize/work/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython3 ocr_cli.py \
+  --input-dir "/home/featurize/data" \[K
+  --pattern "*.png" \[K
+  --out "/home/featurize/work/中国文学史名词解释.md" \[K
+  --model PP-OCRv5_mobile \[K
+  --batch-size 10 \[K
+  --device gpu \[K
+  --page-range 32-34[K[7A[14C[14D final_test-Copy1.py[1B[K[1B[K[1B[K[1B[K[1B[K[1B[K[1B[K[7A[40C[?1l>[?2004l[1B]2;python final_test-Copy1.py]1;python/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+<class 'paddlex.inference.pipelines.ocr.result.OCRResult'>
+Traceback (most recent call last):
+  File "/home/featurize/work/final_test-Copy1.py", line 5, in <module>
+    print(res.__dict__)
+          ^^^
+NameError: name 'res' is not defined
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;31m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython final_test-Copy1.py[?1l>[?2004l
+]2;python final_test-Copy1.py]1;python/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_server_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_det`.[0m
+[32mCreating model: ('PP-OCRv5_server_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_server_rec`.[0m
+<class 'paddlex.inference.pipelines.ocr.result.OCRResult'>
+{'_save_funcs': [<bound method JsonMixin.save_to_json of {'input_path': '0032.png', 'page_index': None, 'doc_preprocessor_res': {'input_path': None, 'page_index': None, 'input_img': array([[[  0, ...,   0],
+        ...,
+        [  0, ...,   0]],
+
+       ...,
+
+       [[255, ..., 255],
+        ...,
+        [255, ..., 255]]], dtype=uint8), 'model_settings': {'use_doc_orientation_classify': True, 'use_doc_unwarping': True}, 'angle': 0, 'rot_img': array([[[  0, ...,   0],
+        ...,
+        [  0, ...,   0]],
+
+       ...,
+
+       [[255, ..., 255],
+        ...,
+        [255, ..., 255]]], dtype=uint8), 'output_img': array([[[255, ..., 255],
+        ...,
+        [255, ..., 255]],
+
+       ...,
+
+       [[255, ..., 255],
+        ...,
+        [255, ..., 255]]], dtype=uint8)}, 'dt_polys': [array([[2927,  298],
+       ...,
+       [2927,  307]], dtype=int16), array([[2457,  308],
+       ...,
+       [2457,  321]], dtype=int16), array([[2787,  314],
+       ...,
+       [2787,  326]], dtype=int16), array([[1330,  418],
+       ...,
+       [1330,  426]], dtype=int16), array([[421, 770],
+       ...,
+       [421, 782]], dtype=int16), array([[1398,  798],
+       ...,
+       [1398, 1002]], dtype=int16), array([[2432,  891],
+       ...,
+       [2432,  897]], dtype=int16), array([[476, 930],
+       ...,
+       [476, 944]], dtype=int16), array([[2783, 1011],
+       ...,
+       [2783, 1019]], dtype=int16), array([[1305, 1088],
+       ...,
+       [1306, 1265]], dtype=int16), array([[ 493, 1332],
+       ...,
+       [ 490, 1464]], dtype=int16), array([[ 295, 1473],
+       ...,
+       [ 289, 1595]], dtype=int16), array([[ 771, 1489],
+       ...,
+       [ 770, 1614]], dtype=int16), array([[1098, 1494],
+       ...,
+       [1096, 1616]], dtype=int16), array([[2533, 1522],
+       ...,
+       [2532, 1632]], dtype=int16), array([[ 299, 1613],
+       ...,
+       [ 296, 1743]], dtype=int16), array([[ 710, 1630],
+       ...,
+       [ 709, 1748]], dtype=int16), array([[ 297, 1751],
+       ...,
+       [ 295, 1883]], dtype=int16), array([[ 607, 1764],
+       ...,
+       [ 605, 1877]], dtype=int16), array([[ 900, 1766],
+       ...,
+       [ 899, 1880]], dtype=int16), array([[ 296, 1888],
+       ...,
+       [ 293, 2014]], dtype=int16), array([[ 707, 1904],
+       ...,
+       [ 707, 2013]], dtype=int16), array([[1092, 1897],
+       ...,
+       [1091, 2020]], dtype=int16), array([[ 924, 1919],
+       ...,
+       [ 924, 1939]], dtype=int16), array([[1018, 1971],
+       ...,
+       [1018, 1995]], dtype=int16), array([[ 295, 2017],
+       ...,
+       [ 295, 2156]], dtype=int16), array([[2331, 2045],
+       ...,
+       [2331, 2161]], dtype=int16), array([[ 306, 2151],
+       ...,
+       [ 305, 2280]], dtype=int16), array([[ 313, 2287],
+       ...,
+       [ 312, 2412]], dtype=int16), array([[2567, 2311],
+       ...,
+       [2567, 2426]], dtype=int16), array([[ 305, 2422],
+       ...,
+       [ 311, 2560]], dtype=int16), array([[ 631, 2505],
+       ...,
+       [ 631, 2533]], dtype=int16), array([[ 505, 2566],
+       ...,
+       [ 505, 2684]], dtype=int16), array([[ 310, 2696],
+       ...,
+       [ 310, 2814]], dtype=int16), array([[2975, 2698],
+       ...,
+       [2975, 2706]], dtype=int16), array([[ 311, 2831],
+       ...,
+       [ 311, 2945]], dtype=int16), array([[2022, 2838],
+       ...,
+       [2024, 2951]], dtype=int16), array([[ 308, 2958],
+       ...,
+       [ 308, 3077]], dtype=int16), array([[1549, 2964],
+       ...,
+       [1549, 3067]], dtype=int16), array([[2030, 2963],
+       ...,
+       [2031, 3076]], dtype=int16), array([[2650, 2956],
+       ...,
+       [2650, 3068]], dtype=int16), array([[1548, 2993],
+       ...,
+       [1548, 3027]], dtype=int16), array([[ 310, 3089],
+       ...,
+       [ 310, 3208]], dtype=int16), array([[2414, 3091],
+       ...,
+       [2415, 3202]], dtype=int16), array([[2406, 3122],
+       ...,
+       [2406, 3169]], dtype=int16), array([[ 311, 3223],
+       ...,
+       [ 311, 3337]], dtype=int16), array([[2114, 3227],
+       ...,
+       [2115, 3334]], dtype=int16), array([[ 320, 3358],
+       ...,
+       [ 320, 3467]], dtype=int16), array([[ 503, 3487],
+       ...,
+       [ 504, 3599]], dtype=int16), array([[ 320, 3618],
+       ...,
+       [ 320, 3723]], dtype=int16), array([[1789, 3617],
+       ...,
+       [1790, 3720]], dtype=int16), array([[ 314, 3739],
+       ...,
+       [ 314, 3864]], dtype=int16), array([[ 316, 3873],
+       ...,
+       [ 314, 3980]], dtype=int16), array([[ 690, 3880],
+       ...,
+       [ 692, 3980]], dtype=int16)], 'model_settings': {'use_doc_preprocessor': True, 'use_textline_orientation': True}, 'text_det_params': {'limit_side_len': 64, 'limit_type': 'min', 'thresh': 0.3, 'max_side_limit': 4000, 'box_thresh': 0.6, 'unclip_ratio': 1.5}, 'text_type': 'general', 'text_rec_score_thresh': 0.0, 'return_word_box': False, 'rec_texts': ['F', '1', '口', '□', 'F', '文学运动', '*', ':', '二', '古文运动', '唐代中期韩愈、柳宗元提倡的一种文体和文学语言的革', '新运动。', '“古文”', '是和魏晋以来流行已久的“骈文”', '相对立', '的概念，', '其特点是奇句单行，不拘格式，不象骈文那样讲究', '排偶、', '辞藻、', '音律和典故。在文体上取法先秦两汉的散文，', '故称作', '古文', '唐朝德宗贞元年间，韩愈大力提倡这种文', '1', '0', '体，以反对六朝以来浮艳颓靡的形式主义文风。', '稍后，又得', '到散文名家柳宗元的支持。他们彼此呼应，积极从事古文的', '宣传和创作，逐渐形成一种文学思潮，这就是所谓的', '“古文', '运动”', '0', '作为一种文学主张，要求恢复古代散文传统，反对华而', '不实的骄文，并不始于韩愈。早在隋代，李谔、王通等人便起', '1', '来反对六朝文学，提出文以载道的观点。', '唐代初期的陈子昂', '更是高举复古主义的旗帜，', '独沂颓波，', '以趣清源', '(李', '', '舟《独孤常州集序》）到天宝，大历年间，李华、', '萧颖士、', '|', '梁肃等人也都努力进行古文的宣传和写作。', '这些都为古文运', '动在中唐的兴起奠定了基础。', '韩愈是古文运动的发起者和领导者。他的古文理论是针', '对六朝以来的浮艳文风而提出的。', '文道合一而以道为主”，', '这是韩愈古文理论的基本出发点。他认为，作文章首先要内', '容充实，', '同时还要有精美得体的艺术形式与之相适应。主'], 'rec_scores': [0.38096147775650024, 0.8307814598083496, 0.07804664969444275, 0.4705933630466461, 0.36840352416038513, 0.9993865489959717, 0.29555726051330566, 0.48655977845191956, 0.08880487829446793, 0.9972726702690125, 0.9936577677726746, 0.9981538653373718, 0.9669510722160339, 0.9684451222419739, 0.9995368123054504, 0.9391636848449707, 0.9780812859535217, 0.9825832843780518, 0.9755759239196777, 0.9925211071968079, 0.9978156089782715, 0.9984571933746338, 0.9937205910682678, 0.09417541325092316, 0.4391283690929413, 0.9873166680335999, 0.9977078437805176, 0.9961954951286316, 0.9979773163795471, 0.9730024337768555, 0.8381487727165222, 0.48399806022644043, 0.9896098971366882, 0.9266296625137329, 0.43430477380752563, 0.9911854267120361, 0.9984188079833984, 0.9377146363258362, 0.9929363131523132, 0.9968624711036682, 0.7832155823707581, 0.0, 0.9676534533500671, 0.9699788093566895, 0.2832479476928711, 0.9879449605941772, 0.9966943860054016, 0.994699239730835, 0.995186984539032, 0.9950101971626282, 0.953819990158081, 0.9946892261505127, 0.9861419796943665, 0.9896703362464905], 'rec_polys': [array([[2927,  298],
+       ...,
+       [2927,  307]], dtype=int16), array([[2457,  308],
+       ...,
+       [2457,  321]], dtype=int16), array([[2787,  314],
+       ...,
+       [2787,  326]], dtype=int16), array([[1330,  418],
+       ...,
+       [1330,  426]], dtype=int16), array([[421, 770],
+       ...,
+       [421, 782]], dtype=int16), array([[1398,  798],
+       ...,
+       [1398, 1002]], dtype=int16), array([[2432,  891],
+       ...,
+       [2432,  897]], dtype=int16), array([[476, 930],
+       ...,
+       [476, 944]], dtype=int16), array([[2783, 1011],
+       ...,
+       [2783, 1019]], dtype=int16), array([[1305, 1088],
+       ...,
+       [1306, 1265]], dtype=int16), array([[ 493, 1332],
+       ...,
+       [ 490, 1464]], dtype=int16), array([[ 295, 1473],
+       ...,
+       [ 289, 1595]], dtype=int16), array([[ 771, 1489],
+       ...,
+       [ 770, 1614]], dtype=int16), array([[1098, 1494],
+       ...,
+       [1096, 1616]], dtype=int16), array([[2533, 1522],
+       ...,
+       [2532, 1632]], dtype=int16), array([[ 299, 1613],
+       ...,
+       [ 296, 1743]], dtype=int16), array([[ 710, 1630],
+       ...,
+       [ 709, 1748]], dtype=int16), array([[ 297, 1751],
+       ...,
+       [ 295, 1883]], dtype=int16), array([[ 607, 1764],
+       ...,
+       [ 605, 1877]], dtype=int16), array([[ 900, 1766],
+       ...,
+       [ 899, 1880]], dtype=int16), array([[ 296, 1888],
+       ...,
+       [ 293, 2014]], dtype=int16), array([[ 707, 1904],
+       ...,
+       [ 707, 2013]], dtype=int16), array([[1092, 1897],
+       ...,
+       [1091, 2020]], dtype=int16), array([[ 924, 1919],
+       ...,
+       [ 924, 1939]], dtype=int16), array([[1018, 1971],
+       ...,
+       [1018, 1995]], dtype=int16), array([[ 295, 2017],
+       ...,
+       [ 295, 2156]], dtype=int16), array([[2331, 2045],
+       ...,
+       [2331, 2161]], dtype=int16), array([[ 306, 2151],
+       ...,
+       [ 305, 2280]], dtype=int16), array([[ 313, 2287],
+       ...,
+       [ 312, 2412]], dtype=int16), array([[2567, 2311],
+       ...,
+       [2567, 2426]], dtype=int16), array([[ 305, 2422],
+       ...,
+       [ 311, 2560]], dtype=int16), array([[ 631, 2505],
+       ...,
+       [ 631, 2533]], dtype=int16), array([[ 505, 2566],
+       ...,
+       [ 505, 2684]], dtype=int16), array([[ 310, 2696],
+       ...,
+       [ 310, 2814]], dtype=int16), array([[2975, 2698],
+       ...,
+       [2975, 2706]], dtype=int16), array([[ 311, 2831],
+       ...,
+       [ 311, 2945]], dtype=int16), array([[2022, 2838],
+       ...,
+       [2024, 2951]], dtype=int16), array([[ 308, 2958],
+       ...,
+       [ 308, 3077]], dtype=int16), array([[1549, 2964],
+       ...,
+       [1549, 3067]], dtype=int16), array([[2030, 2963],
+       ...,
+       [2031, 3076]], dtype=int16), array([[2650, 2956],
+       ...,
+       [2650, 3068]], dtype=int16), array([[1548, 2993],
+       ...,
+       [1548, 3027]], dtype=int16), array([[ 310, 3089],
+       ...,
+       [ 310, 3208]], dtype=int16), array([[2414, 3091],
+       ...,
+       [2415, 3202]], dtype=int16), array([[2406, 3122],
+       ...,
+       [2406, 3169]], dtype=int16), array([[ 311, 3223],
+       ...,
+       [ 311, 3337]], dtype=int16), array([[2114, 3227],
+       ...,
+       [2115, 3334]], dtype=int16), array([[ 320, 3358],
+       ...,
+       [ 320, 3467]], dtype=int16), array([[ 503, 3487],
+       ...,
+       [ 504, 3599]], dtype=int16), array([[ 320, 3618],
+       ...,
+       [ 320, 3723]], dtype=int16), array([[1789, 3617],
+       ...,
+       [1790, 3720]], dtype=int16), array([[ 314, 3739],
+       ...,
+       [ 314, 3864]], dtype=int16), array([[ 316, 3873],
+       ...,
+       [ 314, 3980]], dtype=int16), array([[ 690, 3880],
+       ...,
+       [ 692, 3980]], dtype=int16)], 'vis_fonts': [<paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>], 'textline_orientation_angles': [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'rec_boxes': array([[2927, ...,  307],
+       ...,
+       [ 690, ..., 3980]], dtype=int16)}>, <bound method ImgMixin.save_to_img of {'input_path': '0032.png', 'page_index': None, 'doc_preprocessor_res': {'input_path': None, 'page_index': None, 'input_img': array([[[  0, ...,   0],
+        ...,
+        [  0, ...,   0]],
+
+       ...,
+
+       [[255, ..., 255],
+        ...,
+        [255, ..., 255]]], dtype=uint8), 'model_settings': {'use_doc_orientation_classify': True, 'use_doc_unwarping': True}, 'angle': 0, 'rot_img': array([[[  0, ...,   0],
+        ...,
+        [  0, ...,   0]],
+
+       ...,
+
+       [[255, ..., 255],
+        ...,
+        [255, ..., 255]]], dtype=uint8), 'output_img': array([[[255, ..., 255],
+        ...,
+        [255, ..., 255]],
+
+       ...,
+
+       [[255, ..., 255],
+        ...,
+        [255, ..., 255]]], dtype=uint8)}, 'dt_polys': [array([[2927,  298],
+       ...,
+       [2927,  307]], dtype=int16), array([[2457,  308],
+       ...,
+       [2457,  321]], dtype=int16), array([[2787,  314],
+       ...,
+       [2787,  326]], dtype=int16), array([[1330,  418],
+       ...,
+       [1330,  426]], dtype=int16), array([[421, 770],
+       ...,
+       [421, 782]], dtype=int16), array([[1398,  798],
+       ...,
+       [1398, 1002]], dtype=int16), array([[2432,  891],
+       ...,
+       [2432,  897]], dtype=int16), array([[476, 930],
+       ...,
+       [476, 944]], dtype=int16), array([[2783, 1011],
+       ...,
+       [2783, 1019]], dtype=int16), array([[1305, 1088],
+       ...,
+       [1306, 1265]], dtype=int16), array([[ 493, 1332],
+       ...,
+       [ 490, 1464]], dtype=int16), array([[ 295, 1473],
+       ...,
+       [ 289, 1595]], dtype=int16), array([[ 771, 1489],
+       ...,
+       [ 770, 1614]], dtype=int16), array([[1098, 1494],
+       ...,
+       [1096, 1616]], dtype=int16), array([[2533, 1522],
+       ...,
+       [2532, 1632]], dtype=int16), array([[ 299, 1613],
+       ...,
+       [ 296, 1743]], dtype=int16), array([[ 710, 1630],
+       ...,
+       [ 709, 1748]], dtype=int16), array([[ 297, 1751],
+       ...,
+       [ 295, 1883]], dtype=int16), array([[ 607, 1764],
+       ...,
+       [ 605, 1877]], dtype=int16), array([[ 900, 1766],
+       ...,
+       [ 899, 1880]], dtype=int16), array([[ 296, 1888],
+       ...,
+       [ 293, 2014]], dtype=int16), array([[ 707, 1904],
+       ...,
+       [ 707, 2013]], dtype=int16), array([[1092, 1897],
+       ...,
+       [1091, 2020]], dtype=int16), array([[ 924, 1919],
+       ...,
+       [ 924, 1939]], dtype=int16), array([[1018, 1971],
+       ...,
+       [1018, 1995]], dtype=int16), array([[ 295, 2017],
+       ...,
+       [ 295, 2156]], dtype=int16), array([[2331, 2045],
+       ...,
+       [2331, 2161]], dtype=int16), array([[ 306, 2151],
+       ...,
+       [ 305, 2280]], dtype=int16), array([[ 313, 2287],
+       ...,
+       [ 312, 2412]], dtype=int16), array([[2567, 2311],
+       ...,
+       [2567, 2426]], dtype=int16), array([[ 305, 2422],
+       ...,
+       [ 311, 2560]], dtype=int16), array([[ 631, 2505],
+       ...,
+       [ 631, 2533]], dtype=int16), array([[ 505, 2566],
+       ...,
+       [ 505, 2684]], dtype=int16), array([[ 310, 2696],
+       ...,
+       [ 310, 2814]], dtype=int16), array([[2975, 2698],
+       ...,
+       [2975, 2706]], dtype=int16), array([[ 311, 2831],
+       ...,
+       [ 311, 2945]], dtype=int16), array([[2022, 2838],
+       ...,
+       [2024, 2951]], dtype=int16), array([[ 308, 2958],
+       ...,
+       [ 308, 3077]], dtype=int16), array([[1549, 2964],
+       ...,
+       [1549, 3067]], dtype=int16), array([[2030, 2963],
+       ...,
+       [2031, 3076]], dtype=int16), array([[2650, 2956],
+       ...,
+       [2650, 3068]], dtype=int16), array([[1548, 2993],
+       ...,
+       [1548, 3027]], dtype=int16), array([[ 310, 3089],
+       ...,
+       [ 310, 3208]], dtype=int16), array([[2414, 3091],
+       ...,
+       [2415, 3202]], dtype=int16), array([[2406, 3122],
+       ...,
+       [2406, 3169]], dtype=int16), array([[ 311, 3223],
+       ...,
+       [ 311, 3337]], dtype=int16), array([[2114, 3227],
+       ...,
+       [2115, 3334]], dtype=int16), array([[ 320, 3358],
+       ...,
+       [ 320, 3467]], dtype=int16), array([[ 503, 3487],
+       ...,
+       [ 504, 3599]], dtype=int16), array([[ 320, 3618],
+       ...,
+       [ 320, 3723]], dtype=int16), array([[1789, 3617],
+       ...,
+       [1790, 3720]], dtype=int16), array([[ 314, 3739],
+       ...,
+       [ 314, 3864]], dtype=int16), array([[ 316, 3873],
+       ...,
+       [ 314, 3980]], dtype=int16), array([[ 690, 3880],
+       ...,
+       [ 692, 3980]], dtype=int16)], 'model_settings': {'use_doc_preprocessor': True, 'use_textline_orientation': True}, 'text_det_params': {'limit_side_len': 64, 'limit_type': 'min', 'thresh': 0.3, 'max_side_limit': 4000, 'box_thresh': 0.6, 'unclip_ratio': 1.5}, 'text_type': 'general', 'text_rec_score_thresh': 0.0, 'return_word_box': False, 'rec_texts': ['F', '1', '口', '□', 'F', '文学运动', '*', ':', '二', '古文运动', '唐代中期韩愈、柳宗元提倡的一种文体和文学语言的革', '新运动。', '“古文”', '是和魏晋以来流行已久的“骈文”', '相对立', '的概念，', '其特点是奇句单行，不拘格式，不象骈文那样讲究', '排偶、', '辞藻、', '音律和典故。在文体上取法先秦两汉的散文，', '故称作', '古文', '唐朝德宗贞元年间，韩愈大力提倡这种文', '1', '0', '体，以反对六朝以来浮艳颓靡的形式主义文风。', '稍后，又得', '到散文名家柳宗元的支持。他们彼此呼应，积极从事古文的', '宣传和创作，逐渐形成一种文学思潮，这就是所谓的', '“古文', '运动”', '0', '作为一种文学主张，要求恢复古代散文传统，反对华而', '不实的骄文，并不始于韩愈。早在隋代，李谔、王通等人便起', '1', '来反对六朝文学，提出文以载道的观点。', '唐代初期的陈子昂', '更是高举复古主义的旗帜，', '独沂颓波，', '以趣清源', '(李', '', '舟《独孤常州集序》）到天宝，大历年间，李华、', '萧颖士、', '|', '梁肃等人也都努力进行古文的宣传和写作。', '这些都为古文运', '动在中唐的兴起奠定了基础。', '韩愈是古文运动的发起者和领导者。他的古文理论是针', '对六朝以来的浮艳文风而提出的。', '文道合一而以道为主”，', '这是韩愈古文理论的基本出发点。他认为，作文章首先要内', '容充实，', '同时还要有精美得体的艺术形式与之相适应。主'], 'rec_scores': [0.38096147775650024, 0.8307814598083496, 0.07804664969444275, 0.4705933630466461, 0.36840352416038513, 0.9993865489959717, 0.29555726051330566, 0.48655977845191956, 0.08880487829446793, 0.9972726702690125, 0.9936577677726746, 0.9981538653373718, 0.9669510722160339, 0.9684451222419739, 0.9995368123054504, 0.9391636848449707, 0.9780812859535217, 0.9825832843780518, 0.9755759239196777, 0.9925211071968079, 0.9978156089782715, 0.9984571933746338, 0.9937205910682678, 0.09417541325092316, 0.4391283690929413, 0.9873166680335999, 0.9977078437805176, 0.9961954951286316, 0.9979773163795471, 0.9730024337768555, 0.8381487727165222, 0.48399806022644043, 0.9896098971366882, 0.9266296625137329, 0.43430477380752563, 0.9911854267120361, 0.9984188079833984, 0.9377146363258362, 0.9929363131523132, 0.9968624711036682, 0.7832155823707581, 0.0, 0.9676534533500671, 0.9699788093566895, 0.2832479476928711, 0.9879449605941772, 0.9966943860054016, 0.994699239730835, 0.995186984539032, 0.9950101971626282, 0.953819990158081, 0.9946892261505127, 0.9861419796943665, 0.9896703362464905], 'rec_polys': [array([[2927,  298],
+       ...,
+       [2927,  307]], dtype=int16), array([[2457,  308],
+       ...,
+       [2457,  321]], dtype=int16), array([[2787,  314],
+       ...,
+       [2787,  326]], dtype=int16), array([[1330,  418],
+       ...,
+       [1330,  426]], dtype=int16), array([[421, 770],
+       ...,
+       [421, 782]], dtype=int16), array([[1398,  798],
+       ...,
+       [1398, 1002]], dtype=int16), array([[2432,  891],
+       ...,
+       [2432,  897]], dtype=int16), array([[476, 930],
+       ...,
+       [476, 944]], dtype=int16), array([[2783, 1011],
+       ...,
+       [2783, 1019]], dtype=int16), array([[1305, 1088],
+       ...,
+       [1306, 1265]], dtype=int16), array([[ 493, 1332],
+       ...,
+       [ 490, 1464]], dtype=int16), array([[ 295, 1473],
+       ...,
+       [ 289, 1595]], dtype=int16), array([[ 771, 1489],
+       ...,
+       [ 770, 1614]], dtype=int16), array([[1098, 1494],
+       ...,
+       [1096, 1616]], dtype=int16), array([[2533, 1522],
+       ...,
+       [2532, 1632]], dtype=int16), array([[ 299, 1613],
+       ...,
+       [ 296, 1743]], dtype=int16), array([[ 710, 1630],
+       ...,
+       [ 709, 1748]], dtype=int16), array([[ 297, 1751],
+       ...,
+       [ 295, 1883]], dtype=int16), array([[ 607, 1764],
+       ...,
+       [ 605, 1877]], dtype=int16), array([[ 900, 1766],
+       ...,
+       [ 899, 1880]], dtype=int16), array([[ 296, 1888],
+       ...,
+       [ 293, 2014]], dtype=int16), array([[ 707, 1904],
+       ...,
+       [ 707, 2013]], dtype=int16), array([[1092, 1897],
+       ...,
+       [1091, 2020]], dtype=int16), array([[ 924, 1919],
+       ...,
+       [ 924, 1939]], dtype=int16), array([[1018, 1971],
+       ...,
+       [1018, 1995]], dtype=int16), array([[ 295, 2017],
+       ...,
+       [ 295, 2156]], dtype=int16), array([[2331, 2045],
+       ...,
+       [2331, 2161]], dtype=int16), array([[ 306, 2151],
+       ...,
+       [ 305, 2280]], dtype=int16), array([[ 313, 2287],
+       ...,
+       [ 312, 2412]], dtype=int16), array([[2567, 2311],
+       ...,
+       [2567, 2426]], dtype=int16), array([[ 305, 2422],
+       ...,
+       [ 311, 2560]], dtype=int16), array([[ 631, 2505],
+       ...,
+       [ 631, 2533]], dtype=int16), array([[ 505, 2566],
+       ...,
+       [ 505, 2684]], dtype=int16), array([[ 310, 2696],
+       ...,
+       [ 310, 2814]], dtype=int16), array([[2975, 2698],
+       ...,
+       [2975, 2706]], dtype=int16), array([[ 311, 2831],
+       ...,
+       [ 311, 2945]], dtype=int16), array([[2022, 2838],
+       ...,
+       [2024, 2951]], dtype=int16), array([[ 308, 2958],
+       ...,
+       [ 308, 3077]], dtype=int16), array([[1549, 2964],
+       ...,
+       [1549, 3067]], dtype=int16), array([[2030, 2963],
+       ...,
+       [2031, 3076]], dtype=int16), array([[2650, 2956],
+       ...,
+       [2650, 3068]], dtype=int16), array([[1548, 2993],
+       ...,
+       [1548, 3027]], dtype=int16), array([[ 310, 3089],
+       ...,
+       [ 310, 3208]], dtype=int16), array([[2414, 3091],
+       ...,
+       [2415, 3202]], dtype=int16), array([[2406, 3122],
+       ...,
+       [2406, 3169]], dtype=int16), array([[ 311, 3223],
+       ...,
+       [ 311, 3337]], dtype=int16), array([[2114, 3227],
+       ...,
+       [2115, 3334]], dtype=int16), array([[ 320, 3358],
+       ...,
+       [ 320, 3467]], dtype=int16), array([[ 503, 3487],
+       ...,
+       [ 504, 3599]], dtype=int16), array([[ 320, 3618],
+       ...,
+       [ 320, 3723]], dtype=int16), array([[1789, 3617],
+       ...,
+       [1790, 3720]], dtype=int16), array([[ 314, 3739],
+       ...,
+       [ 314, 3864]], dtype=int16), array([[ 316, 3873],
+       ...,
+       [ 314, 3980]], dtype=int16), array([[ 690, 3880],
+       ...,
+       [ 692, 3980]], dtype=int16)], 'vis_fonts': [<paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>, <paddlex.utils.fonts.Font object at 0x7f2b3f7b2590>], 'textline_orientation_angles': [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'rec_boxes': array([[2927, ...,  307],
+       ...,
+       [ 690, ..., 3980]], dtype=int16)}>], '_json_writer': <paddlex.inference.utils.io.writers.JsonWriter object at 0x7f29d9217c10>, '_rand_fn': None, '_img_writer': <paddlex.inference.utils.io.writers.ImageWriter object at 0x7f29d92175d0>}
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004hpython final_test-Copy1.py[20D3 ocr_cli.py \      
+  --input-dir "/home/featurize/data" \[K
+  --pattern "*.png" \[K
+  --out "/home/featurize/work/中国文学史名词解释.md" \[K
+  --model PP-OCRv5_mobile \[K
+  --batch-size 10 \[K
+  --device gpu \[K
+  --page-range 32-34[K[7A[14C[14D final_test-Copy1.py[1B[K[1B[K[1B[K[1B[K[1B[K[1B[K[1B[K[7A[40C[20D3 ocr_cli.py \      [1B  --input-dir "/home/featurize/data" \[K[1B  --pattern "*.png" \[K[1B  --out "/home/featurize/work/中国文学史名词解释.md" \[K[1B  --model PP-OCRv5_mobile \[K[1B  --batch-size 10 \[K[1B  --device gpu \[K[1B  --page-range 32-34[K[7A[14C[?1l>[?2004l[7B
+]2;python3 ocr_cli.py --input-dir "/home/featurize/data" --pattern "*.png" --out]1;python3正在初始化 PaddleOCR...
+[2025-10-19 02:15:28] 开始初始化 PaddleOCR
+/home/featurize/work/ocr_cli.py:92: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-OCRv5_mobile_rec`.[0m
+[2025-10-19 02:15:32] PaddleOCR 初始化成功
+✅ PaddleOCR 初始化成功
+============================================================
+🚀 开始批量 OCR 识别
+============================================================
+[2025-10-19 02:15:32] 找到 3 张图片
+📊 共 3 张图片 | 日志: /home/featurize/work/ocr_20251019_021528.log
+============================================================
+[2025-10-19 02:15:32] 开始处理图片: 0063.png
+[2025-10-19 02:15:37] ✅ 图片 0063.png 处理完成，耗时 5.25 秒
+[2025-10-19 02:15:37] 开始处理图片: 0064.png
+[2025-10-19 02:15:43] ✅ 图片 0064.png 处理完成，耗时 5.40 秒
+[2025-10-19 02:15:43] 开始处理图片: 0065.png
+[2025-10-19 02:15:49] ✅ 图片 0065.png 处理完成，耗时 6.01 秒
+[2025-10-19 02:15:49] 开始保存识别结果到 Markdown 文件
+✅ 识别结果已保存到: /home/featurize/work/中国文学史名词解释.md
+============================================================
+🎉 所有图片处理完成！
+============================================================
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;32m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h[7mpython ocr_cli.py --page-range 32-34[27m
+[K
+[K
+[K[3A[14C[27mp[27my[27mt[27mh[27mo[27mn[27m [27mo[27mc[27mr[27m_[27mc[27ml[27mi[27m.[27mp[27my[27m [27m-[27m-[27mp[27ma[27mg[27me[27m-[27mr[27ma[27mn[27mg[27me[27m [27m3[27m2[27m-[27m3[27m4[3B[K[?1l>[?2004l
+]2;python ocr_cli.py --page-range 32-34]1;pythonusage: ocr_cli.py [-h] --input-dir INPUT_DIR [--pattern PATTERN] --out OUT [--model {PP-OCRv5_mobile,PP-OCRv5_server}]
+                  [--batch-size BATCH_SIZE] [--device {cpu,gpu}] [--cpu-threads CPU_THREADS] [--page-range PAGE_RANGE]
+ocr_cli.py: error: the following arguments are required: --input-dir, --out
+[1m[7m%[27m[1m[0m                                                                                                                        ]2;featurize@featurize:~/work]1;~/work]7;file://featurize/home/featurize/work\[0m[27m[24m[J(base) [01;31m➜ [01;32m[36mwork[01;34m[01;34m[00m [K[?1h=[?2004h[7mpython3 ocr_cli.py \[27m
+[7m  --input-dir "/home/featurize/data" \[27m[K
+[7m  --pattern "*.png" \[27m[K
+[7m  --out "/home/featurize/work/中国文学史名词解释.md" \[27m[K
+[7m  --model PP-OCRv5_mobile \[27m[K
+[7m  --batch-size 10 \[27m[K
+[7m  --device gpu \[27m[K
+[7m  --page-range 32-34[27m[K[7A[27mp[27my[27mt[27mh[27mo[27mn[27m3[27m [27mo[27mc[27mr[27m_[27mc[27ml[27mi[27m.[27mp[27my[27m [27m\[1B[27m [27m [27m-[27m-[27mi[27mn[27mp[27mu[27mt[27m-[27md[27mi[27mr[27m [27m"[27m/[27mh[27mo[27mm[27me[27m/[27mf[27me[27ma[27mt[27mu[27mr[27mi[27mz[27me[27m/[27md[27ma[27mt[27ma[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mp[27ma[27mt[27mt[27me[27mr[27mn[27m [27m"[27m*[27m.[27mp[27mn[27mg[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mo[27mu[27mt[27m [27m"[27m/[27mh[27mo[27mm[27me[27m/[27mf[27me[27ma[27mt[27mu[27mr[27mi[27mz[27me[27m/[27mw[27mo[27mr[27mk[27m/[27m中[27m[27m国[27m[27m文[27m[27m学[27m[27m史[27m[27m名[27m[27m词[27m[27m解[27m[27m释[27m[27m.[27mm[27md[27m"[27m [27m\[1B[27m [27m [27m-[27m-[27mm[27mo[27md[27me[27ml[27m [27mP[27mP[27m-[27mO[27mC[27mR[27mv[27m5[27m_[27mm[27mo[27mb[27mi[27ml[27me[27m [27m\[1B[27m [27m [27m-[27m-[27mb[27ma[27mt[27mc[27mh[27m-[27ms[27mi[27mz[27me[27m [27m1[27m0[27m [27m\[1B[27m [27m [27m-[27m-[27md[27me[27mv[27mi[27mc[27me[27m [27mg[27mp[27mu[27m [27m\[1B[27m [27m [27m-[27m-[27mp[27ma[27mg[27me[27m-[27mr[27ma[27mn[27mg[27me[27m [27m3[27m2[27m-[27m3[27m4[?1l>[?2004l
+]2;python3 ocr_cli.py --input-dir "/home/featurize/data" --pattern "*.png" --out]1;python3正在初始化 PaddleOCR...
+[2025-10-19 02:25:12] 开始初始化 PaddleOCR
+/home/featurize/work/ocr_cli.py:92: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  self.ocr = PaddleOCR(
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_doc_ori`.[0m
+/environment/miniconda3/lib/python3.11/site-packages/paddle/utils/cpp_extension/extension_utils.py:711: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('UVDoc', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `/home/featurize/.paddlex/official_models/PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_d

@@ -1,241 +1,229 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-PaddleOCR 批量图片识别脚本
-功能：批量识别data文件夹中的PNG图片，生成Markdown文档
+PaddleOCR 批量图片识别脚本（命令行完整版）
+功能：支持通配符、页码范围、模型切换、CPU/GPU
 作者：iFlow CLI
-版本：1.4 (最终修正版)
+版本：2.0
 """
 
 import os
 import sys
 import time
+import re
 from datetime import datetime
+from pathlib import Path
+import argparse
+import textwrap
 from paddleocr import PaddleOCR
-import concurrent.futures
 
+# ---------- 命令行参数 ----------
+def parse_cli_args():
+    parser = argparse.ArgumentParser(
+        description="PaddleOCR 批量图片识别（命令行版）",
+        formatter_class=argparse.RawTextHelpFormatter,
+        epilog=textwrap.dedent("""
+        示例：
+        python3 ocr_cli.py \
+            --input-dir "/Users/diessen/temp" \
+            --pattern "*.png" \
+            --out "/Users/diessen/中国文学史名词解释.md" \
+            --model PP-OCRv5_mobile \
+            --batch-size 10 \
+            --device gpu \
+            --page-range 1-10,15,20-25
+        """))
+    parser.add_argument("--input-dir",  required=True, help="图片目录")
+    parser.add_argument("--pattern",   default="*.png", help="文件通配符（默认 *.png）")
+    parser.add_argument("--out",       required=True, help="输出 markdown 路径")
+    parser.add_argument("--model",
+                        choices=["PP-OCRv5_mobile", "PP-OCRv5_server"],
+                        default="PP-OCRv5_mobile",
+                        help="检测+识别模型组合（默认 mobile）")
+    parser.add_argument("--batch-size", type=int, default=10,
+                        help="内部 batch size（默认 10）")
+    parser.add_argument("--device", choices=["cpu", "gpu"], default="gpu",
+                        help="推理设备（默认 gpu）")
+    parser.add_argument("--cpu-threads", type=int, default=10,
+                        help="mkldnn 线程数（CPU 时生效）")
+    parser.add_argument("--page-range", type=str,
+                        help="页码范围，如 1-10,15,20-25（按文件名数字排序后）")
+    return parser.parse_args()
+
+# ---------- 工具函数 ----------
+def natural_numeric_key(p: Path):
+    nums = re.findall(r"\d+", p.stem)
+    return tuple(int(n) for n in nums) if nums else (float('inf'),)
+
+def parse_page_range(text: str):
+    if not text:
+        return None
+    pages = set()
+    for part in text.split(","):
+        part = part.strip()
+        if "-" in part:
+            a, b = map(int, part.split("-", 1))
+            pages.update(range(min(a, b), max(a, b) + 1))
+        else:
+            pages.add(int(part))
+    # 0-based 索引
+    return sorted({p - 1 for p in pages if p > 0})
+
+# ---------- OCR 处理器 ----------
 class OCRProcessor:
-    """OCR处理器类"""
-    
-    def __init__(self):
-        """初始化OCR处理器"""
-        self.data_folder = "/home/featurize/data"
-        self.output_file = "/home/featurize/data/中国文学史名词解释.md"
-        self.batch_size = 1
-        self.log_file = f"/home/featurize/work/ocr_execution_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
-        
-        # 初始化PaddleOCR
-        print("正在初始化PaddleOCR...")
-        self._log_message("开始初始化PaddleOCR")
+    def __init__(self, args):
+        self.data_folder = Path(args.input_dir).expanduser().resolve()
+        self.output_file = Path(args.out).expanduser().resolve()
+        self.pattern     = args.pattern
+        self.batch_size  = args.batch_size
+        self.page_range  = parse_page_range(args.page_range)
+        self.log_file = Path("/home/featurize/work") / f"ocr_{datetime.now():%Y%m%d_%H%M%S}.log"
+
+
+        # 模型映射
+        det_model, rec_model = {
+            "PP-OCRv5_mobile": ("PP-OCRv5_mobile_det", "PP-OCRv5_mobile_rec"),
+            "PP-OCRv5_server": ("PP-OCRv5_server_det", "PP-OCRv5_server_rec"),
+        }[args.model]
+
+        print("正在初始化 PaddleOCR...")
+        self._log_message("开始初始化 PaddleOCR")
         try:
-            # 修正1: 使用官方推荐的新版参数
             self.ocr = PaddleOCR(
                 lang='ch',
-                device='gpu',
+                device=args.device,
                 use_textline_orientation=True,
-                # 保持使用server模型以保证质量，但添加内存优化参数
-                #text_detection_model_name="PP-OCRv5_server_det",
-                #text_recognition_model_name="PP-OCRv5_server_rec",
-                text_detection_model_name="PP-OCRv5_mobile_det",  # 👈 换轻量模型
-                text_recognition_model_name="PP-OCRv5_mobile_rec",  # 👈 换轻量模型
-                enable_mkldnn=True,
-                cpu_threads=10
+                text_detection_model_name=det_model,
+                text_recognition_model_name=rec_model,
+                enable_mkldnn=args.device == "cpu",
+                cpu_threads=args.cpu_threads
             )
-            self._log_message("PaddleOCR初始化成功")
-            print("✅ PaddleOCR初始化成功")
+            self._log_message("PaddleOCR 初始化成功")
+            print("✅ PaddleOCR 初始化成功")
         except Exception as e:
-            error_msg = f"❌ PaddleOCR初始化失败: {str(e)}"
+            error_msg = f"❌ PaddleOCR 初始化失败: {str(e)}"
             print(error_msg)
             self._log_message(error_msg)
             sys.exit(1)
-    
+
     def _log_message(self, message):
-        """记录日志信息"""
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         log_entry = f"[{timestamp}] {message}"
         print(log_entry)
-        
-        # 写入日志文件
         try:
             with open(self.log_file, 'a', encoding='utf-8') as f:
                 f.write(log_entry + '\n')
         except Exception as e:
             print(f"⚠️ 无法写入日志文件: {str(e)}")
-    
+            
     def _get_image_files(self):
-        """获取所有PNG图片文件列表"""
         try:
-            all_files = os.listdir(self.data_folder)
-            png_files = [f for f in all_files if f.endswith('.png')]
-            png_files.sort()
-            self._log_message(f"找到 {len(png_files)} 张PNG图片")
+            files = sorted(self.data_folder.glob(self.pattern), key=natural_numeric_key)
+    
+            if self.page_range is not None:
+                # 提取文件名中的数字部分
+                def extract_num(f):
+                    nums = re.findall(r"\d+", f.stem)
+                    return int(nums[-1]) if nums else None
+    
+                selected = []
+                for f in files:
+                    num = extract_num(f)
+                    if num is not None and (num in [p + 1 for p in self.page_range]):
+                        selected.append(f)
+    
+                files = selected
+    
+            png_files = [f.name for f in files if f.is_file()]
+            self._log_message(f"找到 {len(png_files)} 张图片：{[f.name for f in files]}")
             return png_files
+    
         except Exception as e:
             error_msg = f"❌ 获取图片文件失败: {str(e)}"
             self._log_message(error_msg)
             sys.exit(1)
-    
-    def _process_single_image(self, image_file):
-        """处理单张图片"""
-        image_path = os.path.join(self.data_folder, image_file)
         
+    def _process_single_image(self, image_file):
+        image_path = self.data_folder / image_file
         try:
-            start_time = time.time()
+            start = time.time()
             self._log_message(f"开始处理图片: {image_file}")
-            
-            # 执行OCR识别
-            result = self.ocr.predict(image_path)
-            
-            # 修正2: 采用官方推荐的结果解析方式
+            result = self.ocr.predict(str(image_path))
             recognized_text = ""
+    
             if result and len(result) > 0:
                 res = result[0]
-                # 使用官方推荐的方法处理结果
-                try:
-                    # 如果结果对象有json属性，尝试从中获取文本
-                    if hasattr(res, 'json'):
-                        result_json = res.json
-                        if 'res' in result_json and 'rec_texts' in result_json['res']:
-                            # 使用两个换行符连接，形成更好的段落分隔
-                            recognized_text = "\n\n".join(result_json['res']['rec_texts'])
-                    # 如果结果对象有rec_texts属性，直接使用
-                    elif hasattr(res, 'rec_texts'):
-                        # 使用两个换行符连接，形成更好的段落分隔
-                        recognized_text = "\n\n".join(res.rec_texts)
-                    # 回退到旧的解析方式
-                    else:
-                        recognized_lines = [
-                            line[1][0] for line in res
-                        ]
-                        # 使用两个换行符连接，形成更好的段落分隔
-                        recognized_text = "\n\n".join(recognized_lines)
-                except Exception as e:
-                    # 如果以上方法都失败，记录错误并使用空文本
-                    self._log_message(f"结果解析失败: {str(e)}")
-                    recognized_text = ""
-            
-            # 进一步处理文本，移除多余的空白行并规范化段落
-            if recognized_text:
-                # 将多个连续的换行符替换为两个换行符（段落分隔）
-                import re
-                recognized_text = re.sub(r'\n{3,}', '\n\n', recognized_text)
-                # 移除行首行尾的空白字符
-                recognized_text = recognized_text.strip()
-                # 进一步优化段落格式
-                lines = recognized_text.split('\n')
-                processed_lines = []
-                for line in lines:
-                    # 移除行首行尾的空白字符
-                    line = line.strip()
-                    # 如果行不为空，则添加到结果中
-                    if line:
-                        processed_lines.append(line)
-                    # 如果行为空且结果中最后一个元素不是空行，则添加一个空行作为段落分隔
-                    elif processed_lines and processed_lines[-1] != "":
-                        processed_lines.append("")
-                # 重新组合文本
-                recognized_text = "\n".join(processed_lines)
-            
-            processing_time = time.time() - start_time
-            self._log_message(f"✅ 图片 {image_file} 处理完成，耗时 {processing_time:.2f} 秒")
-            
-            # 修正3: 修复f-string语法错误，并安全地记录日志
-            log_preview = recognized_text.replace('\n', ' ')
-            if len(log_preview) > 50:
-                log_content = f"{log_preview[:50]}..."
-            else:
-                log_content = log_preview
-            self._log_message(f"识别内容: {log_content}")
-            
-            return recognized_text.strip()
-            
-        except Exception as e:
-            error_msg = f"❌ 处理图片 {image_file} 失败: {str(e)}"
-            self._log_message(error_msg)
-            print(f"\n{error_msg}")
-            return ""
     
+                # 1. 新接口：OCRResult 对象
+                if hasattr(res, 'rec_texts') and res.rec_texts:
+                    recognized_text = "\n\n".join(res.rec_texts)
+                # 2. 少数版本封装在 .json['res']['rec_texts']
+                elif hasattr(res, 'json') and isinstance(res.json, dict):
+                    rec_texts = res.json.get('res', {}).get('rec_texts', [])
+                    recognized_text = "\n\n".join(rec_texts)
+                # 3. 旧版 list fallback
+                elif isinstance(res, (list, tuple)):
+                    recognized_text = "\n\n".join([line[1][0] for line in res if len(line) > 1])
+                else:
+                    self._log_message(f"⚠️ 未识别的 OCR 结果结构: {type(res)}")
+    
+                # 统一清理空行
+                recognized_text = re.sub(r'\n{3,}', '\n\n', recognized_text.strip())
+    
+            cost = time.time() - start
+            self._log_message(f"✅ 图片 {image_file} 处理完成，耗时 {cost:.2f} 秒")
+            return recognized_text
+    
+        except Exception as e:
+            error_msg = f"❌ 处理图片 {image_file} 失败: {e}"
+            self._log_message(error_msg)
+            return ""
+
     def _save_results(self, results):
-        """保存识别结果到Markdown文件"""
         try:
-            self._log_message("开始保存识别结果到Markdown文件")
-            
+            self._log_message("开始保存识别结果到 Markdown 文件")
+            self.output_file.parent.mkdir(parents=True, exist_ok=True)
             with open(self.output_file, 'w', encoding='utf-8') as f:
                 f.write("# 中国文学史名词解释\n\n")
-                f.write(f"生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+                f.write(f"生成时间: {datetime.now():%Y-%m-%d %H:%M:%S}\n\n")
                 f.write("---\n\n")
-                
                 for image_file, text in results:
                     f.write(f"## {image_file}\n\n")
-                    if text:
-                        f.write(f"{text}\n\n")
-                    else:
-                        f.write("（未识别到文字内容）\n\n")
+                    f.write(f"{text or '（未识别到文字内容）'}\n\n")
                     f.write("---\n\n")
-            
-            self._log_message(f"✅ 识别结果已保存到: {self.output_file}")
             print(f"✅ 识别结果已保存到: {self.output_file}")
-            
         except Exception as e:
             error_msg = f"❌ 保存结果失败: {str(e)}"
             self._log_message(error_msg)
             sys.exit(1)
-    
+
     def process_all_images(self):
-        """处理所有图片"""
         print("=" * 60)
-        print("🚀 开始批量OCR识别")
+        print("🚀 开始批量 OCR 识别")
         print("=" * 60)
-        
         image_files = self._get_image_files()
-        total_images = len(image_files)
-        
-        if total_images == 0:
-            self._log_message("❌ 未找到任何PNG图片文件")
-            print("❌ 未找到任何PNG图片文件")
+        total = len(image_files)
+        if total == 0:
+            print("❌ 未找到任何图片")
             return
-        
-        test_image_files = [f for f in image_files if f in ['0032.png', '0033.png', '0034.png', '0035.png']]
-        if test_image_files:
-            image_files = test_image_files
-            total_images = len(image_files)
-            self._log_message(f"筛选出 {total_images} 张测试图片: {', '.join(image_files)}")
-            print(f"📝 筛选出 {total_images} 张测试图片: {', '.join(image_files)}")
-        
-        print(f"📊 总共需要处理 {total_images} 张图片")
-        print(f"📝 日志文件: {self.log_file}")
-        print(f"📄 输出文件: {self.output_file}")
+        print(f"📊 共 {total} 张图片 | 日志: {self.log_file}")
         print("=" * 60)
-        
+
         results = []
-        self._log_message("开始按顺序逐张处理图片")
-        print("🔄 开始按顺序逐张处理图片")
-        
-        # 按顺序逐张处理图片，避免多线程带来的顺序问题
-        for image_file in image_files:
-            try:
-                recognized_text = self._process_single_image(image_file)
-                results.append((image_file, recognized_text))
-            except Exception as e:
-                error_msg = f"❌ 处理图片 {image_file} 时发生异常: {str(e)}"
-                self._log_message(error_msg)
-                print(f"\n{error_msg}")
-                results.append((image_file, ""))
+        for img in image_files:
+            text = self._process_single_image(img)
+            results.append((img, text))
 
         self._save_results(results)
-        
         print("=" * 60)
         print("🎉 所有图片处理完成！")
-        print(f"📊 处理统计: {total_images} 张图片")
-        print(f"📄 输出文件: {self.output_file}")
-        print(f"📝 日志文件: {self.log_file}")
         print("=" * 60)
 
+# ---------- 入口 ----------
 def main():
-    """主函数"""
+    args = parse_cli_args()
     try:
-        processor = OCRProcessor()
-        processor.process_all_images()
+        OCRProcessor(args).process_all_images()
     except KeyboardInterrupt:
         print("\n⚠️ 用户中断了程序执行")
         sys.exit(0)
